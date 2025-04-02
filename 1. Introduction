@@ -1,0 +1,44 @@
+A database is a systematic or organized collection of information.
+It acts as a container where we will store our required data, so that we access, modify, and delete based on our requirements.
+
+Types of Databases:
+1. Relational database 
+2. Nosql database
+3. Centralized database
+4. Cloud database
+
+Advantages of Database:
+. It reduces duplicate data(redundancy)
+.Data backup and recovery
+. Efficient ways to process the query
+.Security
+.Data sharing
+.Abstraction
+
+Introduction to SQL
+.SQL stands for Structured query language.
+.SQL is known as the database language.
+.It is used to communicate with any relational database.
+.We can use this language construct to write SQL QUERIES.
+.SQL is designed to manage the data in relational databases like MYSQL, Oracle, MS access, SQL Server, etc.
+.We will write and execute SQL queries that can create, read, update and delete data in relational databases.
+.SQL is not a database management system.
+.RDBMS use SQL to manage the data in the database.
+.SQL is used to handle structured data.
+.SQL developed by IBM(1970s)
+
+Introduction to MYSQL
+.MYSQL is a RDBMS.
+.RDBMS stands for Relational Data Base Management System.
+.DBMS is a software that used to manage Database(ex: relational database).
+.If a DBMS software is managed relational databases then that DBMS is called as RDBMS.
+
+Popular RDBMS software in the world.
+1. MYSQL
+2. Oracle
+3. SQL SERVER(Microsoft)
+4. IBM DB2
+5. PostgreSQL
+
+.MYSQL is open-source and freeware under the GNU License.
+.MySQL was developed by MySQL AB and it was owned by ORACLE corp.

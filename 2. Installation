@@ -1,0 +1,5 @@
+To download MySQL search for "mysql download" or click on the below link https://www.mysql.com/downloads/ then go to bottom and click on MySQL Community (GPL) Downloads » then MySQL Installer for Windows 
+
+Download and Install MySQL, MySQL workbench, MySQL shell.
+
+After Installation search for Mysql Command line client and enter password and enter the command show databases;
