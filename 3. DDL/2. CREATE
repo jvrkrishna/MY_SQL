@@ -1,0 +1,58 @@
+CREATE command is used to create database, table, views, procedure, function, trigger etc.
+
+#Create a database
+CREATE DATABASE COLLEGE;
+
+#To show all tha databases
+SHOW DATABASES;
+
+#To delete database
+DROP DATABASE COLLEGE;
+
+SHOW Databases;
+
+What is Table?
+Table is collection of rows and columns.
+Relation means table.
+Column also called as filed/attributes
+Rows also called as Tuples/Record
+Complete table+data is known as instance.
+
+How to crete a table?
+Syntax:
+CREATE table table_name(
+    col_name1 datatype(size),
+    col_name2 datatype(size),
+    col_name3 datatype(size),
+    .
+    .
+    col_name_n datatype(size)
+);
+
+Example:
+WAQ to create a table named with 'stud_info' with 5 column like roll, name, course, mark, and gender.
+
+CREATE TABLE stud_info
+(
+    Roll INT,
+    Name VARCHAR(30),
+    Course VARCHAR(20),
+    Mark INT,
+    Gender CHAR
+);
+
+Practical:
+CREATE DATABASE COLLEGE;
+USE COLLEGE;
+
+CREATE TABLE stud_info
+(
+    Roll INT,
+    Name VARCHAR(30),
+    Course VARCHAR(20),
+    Mark INT,
+    Gender CHAR
+);
+
+SHOW DATABASES;
+SELECT * FROM stud_info;
