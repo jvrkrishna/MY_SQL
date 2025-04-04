@@ -1,0 +1,113 @@
+The ALTER command is used to change the structure of an existing table.
+Generally, we can use the ALTER command for:
+    .Adding a new column.(Alter with add)
+    .Delete an existing column.(Alter with drop)
+    .Change column datatype.(Alter with modify)
+    .Change column Size.(Alter with modify)
+    .Rename the column.(Alter with rename)
+    .Adding new constraints.(Alter with add)
+
+==> Adding a new column:
+    We will use AlTER with ADD command for adding new column.
+
+    Syntax:
+        ALTER TABLE <tablename> ADD<col_name> datatype(size);
+
+    Example:
+        ALTER table stud_info ADD Address VARCHAR(20);
+
+
+    Adding Multiple Columns:
+    Syntax:
+        ALTER TABLE <tablename> ADD(<col1_name> datatype(size)),(<col2_name>datatype(size));
+
+Practical:
+CREATE DATABASE COLLEGE;
+USE COLLEGE;
+
+CREATE TABLE stud_info
+(
+    Roll INT,
+    Name VARCHAR(30),
+    Course VARCHAR(20)
+);
+
+SHOW DATABASES;
+SELECT * FROM stud_info;
+
+#To add column in the existing table
+ALTER table stud_info ADD Address VARCHAR(20);
+
+#To see the column is added or not just describe the table.
+DESC stud_info;
+
+#Add multiple columns
+ALTER table stud_info ADD (Marks INT,Gender CHAR);
+DESC stud_info;
+
+==> DELETE an existing column:
+    .We will use ALTER with DROP command to delete an existing column.
+
+    Syntax:
+        Alter table<table_name> DROP <column_name>;
+    
+    Delete Multiple Columns:
+        Alter table<table_name> 
+        DROP <column1_name>,
+        DROP <column2_name>,
+        DROP <column3_name>;
+
+Practical
+#Delete column from a table
+AlTER table stud_info DROP Address;
+DESC stud_info;
+
+#Delete multi columns from a table
+AlTER table stud_info 
+    DROP Marks,
+    DROP Gender;
+
+DESC stud_info;
+
+==> Change column datatype:
+    We will use AlTER with MODIFY command to change column datatype.
+
+    Syntax:
+        ALTER Table <table_name> MODIFY <col_name> datatype(size);
+
+    To change multiple Datatypes:
+        ALTER TABLE <table_name>
+            MODIFY <col1_name> datatype(size),
+            MODIFY <col2_name> datatype(size),
+            MODIFY <col3_name> datatype(size);
+
+Practical
+#Add multiple columns
+ALTER table stud_info ADD (Marks INT,Gender CHAR);
+DESC stud_info;
+
+#Modify Column datatype
+ALTER table stud_info MODIFY Marks FLOAT;
+DESC stud_info;
+
+#Modify multiple columns
+ALTER table stud_info 
+MODIFY Marks INT,
+MODIFY Gender Varchar(20);
+DESC stud_info;
+
+==> Rename the column
+    We will use AlTER with RENAME command to rename the column name.
+    Syntax:
+        ALTER TABLE <table_name> RENAME COLUMN <old_col_name> to <new_col_name>;
+
+    To rename multi columns
+        ALTER TABLE <table_name>
+        RENAME COLUMN <old_col_name> to <new_col_name>,
+        RENAME COLUMN <old_col_name> to <new_col_name>,
+        RENAME COLUMN <old_col_name> to <new_col_name>;
+
+Practical
+ALTER TABLE stud_info  RENAME COLUMN Marks to Mark;
+DESC stud_info;
+

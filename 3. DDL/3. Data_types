@@ -1,0 +1,54 @@
+In MYSQL datatypes are generally classified into 3types:
+1. String
+2. Numeric
+3. Data and Time
+
+1. String Datatype:
+    .If we want to store char or group of char, then we should use string.
+    .In MYSQL we don't have direct String type, they have categorised in different names.
+-->char
+-->varchar
+-->TEXT
+-->BINARY
+-->BLOB
+-->ENUM
+-->SET
+
+-->CHAR
+    .It is used to store fixed length of characters.
+    .It can store alphabets, numbers, digits and special symbols.
+    .Size is 0 to 255
+    .Default size is 1.
+    .CHAR is static in nature.
+    .For each CHAR, CHAR datatype will take 1 byte of memory.
+    .If we know the exact length of the string then we can use CHAR.
+
+-->VARCHAR
+    .It is used to store different length of characters.
+    .It can store alphabets, numbers, digits and special symbols.
+    .Size is 0 65535
+    .No default size, we must specify the size.
+    .VARCHAR dynamic in nature.
+    .For each CHAR, VARCHAR datatype will take 1 byte of memory along with some extra    space(to store length information)
+    .If we are not sure about length of the string we can use VARCHAR.
+
+-->TEXT
+    .It is used to hold maximum 65,535 char.
+
+-->BINARY
+    .It is used to store binary type of string values like image.
+    .It is similar like Char data type.
+
+-->BLOB
+    .It is used to hold maximum 65,535 bytes.
+
+-->ENUM
+    .Choose any one option from group of options.
+
+-->SET
+    .Choose multiple options from group of options.
+
+
+2. Numeric Datatype
+
+3. Date and Time
