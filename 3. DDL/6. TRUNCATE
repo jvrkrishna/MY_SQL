@@ -1,0 +1,30 @@
+TRUNCATE command is used to remove all the rows from the table.
+TRUNCATE cannot delete entire table it only deletes it rows except table headings.
+DROP, TRUNCATE and DELETE all are different.
+TRUNCATE command works faster than the DROP and Delete command.
+
+Syntax:
+    TRUNCATE table <table_name>;
+
+Practical
+show databases;
+Create Database College;
+USE COLLEGE;
+
+Create table stud_info
+(
+Roll Int,
+Name Varchar(30),
+Course Varchar(20)
+);
+
+select * from stud_info;
+
+insert into stud_info values(1,"Raj_sekhar","MYSQL");
+insert into stud_info values(1,"Dinesh","Python");
+
+select * from stud_info;
+
+truncate table stud_info;
+
+select * from stud_info;

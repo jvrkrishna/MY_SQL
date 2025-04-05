@@ -1,0 +1,27 @@
+.DROP command is used to remove database object from the database.
+.Generally, we can use the DROP command to:
+    => DROP table
+    => DROP database
+    => DROP view
+    => DROP index
+
+Syntax: 
+    DROP table <table_name>;
+
+Syntax to drop database:
+    Drop database <database_name>;
+
+Practical
+show databases;
+create database college;
+use college;
+
+show tables;
+create table stud_info;
+
+select * from stud_info;
+DROP table stud_info;
+
+DROP database college;
+
+

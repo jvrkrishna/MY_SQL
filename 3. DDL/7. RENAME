@@ -1,0 +1,20 @@
+RENAME command is used to change the database objects like table, column etc.
+Generally, Rename command is used along with ALTER command.
+
+Rename a table
+Syntax:
+    RENAME table <old_Table_Name> to <New_Table_Name>;
+
+Rename multiple table name at a time
+Syntax:
+    RENAME table <old_Table_Name> to <New_Table_Name>,
+                 <old_Table_Name> to <New_Table_Name>,
+                 <old_Table_Name> to <New_Table_Name>;
+
+Rename a table using Alter with Rename command
+
+Rename column names
+
+Rename multi column names at a time
+
+Rename a column using Alter with rename command
