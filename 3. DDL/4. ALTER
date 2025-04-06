@@ -139,7 +139,7 @@ Constraints in SQL are:
     We can use the NOT NULL constraint either creating the table in the database or while modifying it.
     We can have more than one NOT NULL columns in a table.
 
-    HOW to add NOT NULL constraint to column/columns?
+HOW to add NOT NULL constraint to column/columns?
     -->NOT NULL constraint on CREATE TABLE
 
 Practical:
@@ -153,6 +153,7 @@ Practical:
     
     INSERT INTO employee(ID,NAME,ADDRESS) values(1,'Ram','Kakinada');
     INSERT INTO employee(ID,NAME,ADDRESS) values(NULL,'Ram','Kakinada'); ---Raises error id cannot be null.
+
 ==========================================================================================
 UNIQUE:
     The UNIQUE constraint makes sure that all values in a column must be unique.
@@ -160,5 +161,171 @@ UNIQUE:
     We can have more than one UNIQUE column in a table.
     We can use this constraint on the CREATE and ALTER table command.
 
-    
+How to add UNIQUE constraint to column/columns?
+    -->UNIQUE constraint on CREATE TABLE
+
+Practical
+CREATE TABLE employee(
+    ID int(6) unique,
+    NAME varchat(10) NOT NULL,
+    ADDRESS varchar(20)
+);
+
+DESC employee;
+INSERT INTO employee(ID,NAME,ADDRESS) VALUES(1,'Raj',"Kakinada');
+
+Again we run above command it gives error Duplicate entry '1' for key 'ID'
+INSERT INTO employee(ID,NAME,ADDRESS) VALUES(1,'Raj',"Kakinada');
+
+How to add UNIQUE constraint to column/columns?
+UNIQUE constraint on CREATE TABLE
+CREATE TABLE employee(
+    ID int(6) UNIQUE,
+    NAME varchar(10) NOT NULL,
+    MOBILE int(11) Unique,
+    ADDRESS varchar(20)
+);
+
+==========================================================================================
+PRIMARY KEY
+    A Primary key is a field which can uniquely identify each row in a table.
+    Primary keys must contain UNIQUE values, and cannot contain NULL values.
+    A Table can have only ONE primary key and this primary key can consist of single or multiple columns.
+    We can use this constraint on the CREATE and ALTER table command.
+
+    NOT NULL+UNIQUE=PRIMARY KEY
+
+#How to add PRIMARY KEY constraint on a Table?
+Primary key constraint on Create table
+
+Practical
+CREATE TABLE employee(
+    ID int(6),
+    NAME varchar(10) NOT NULL,
+    ADDRESS varchar(20),
+    PRIMARY KEY(ID)  #PRIMARY KEY(ID,NAME) ---for combination of multiple columns
+);
+
+#We can write like this also
+CREATE TABLE employee(
+    ID int(6) PRIMARY KEY,
+    NAME varchar(10) NOT NULL PRIMARY KEY,
+    ADDRESS varchar(20)
+);
+
+DESC employee;
+
+#Below code also done same job what the above code done.(i.e., NOT NULL+UNIQUE=PRIMARY KEY)
+CREATE TABLE employee(
+    ID int(6) NOT NULL UNIQUE,
+    NAME varchar(10) NOT NULL,
+    ADDRESS varchar(20)
+);
+
+DESC employee;
+
+#Add some data to check PRIMARY KEY Constraint
+INSERT INTO employee(ID,NAME,ADDRESS) VALUES(1,'Ram','Kakinada')
+
+#Repeate once Again ---- raises error Duplicate entry
+INSERT INTO employee(ID,NAME,ADDRESS) VALUES(1,'Ram','Kakinada')
+
+#Repeat once again with ID NULL ------ raises error ID cannot be null
+INSERT INTO employee(ID,NAME,ADDRESS) VALUES(NULL,'Ram','Kakinada')
+
+==========================================================================================
+FOREIGN KEY
+A foreign key is a field(or collection of fields) points to the PRIMARY KEY of another table.
+Table with the foreign key is called the child table and the table with the primary key is called the referenced or parent table.
+The foreign key constraint is used to prevent actions that would destroy links between tables.
+We can use this constraint on the CREATE and ALTER table command.
+
+Check the primary key and foreign key relation in online.
+
+Practical
+*********** DEPARTMENT TABLE **************
+CREATE TABLE department(
+    ID int(6) PRIMARY KEY,
+    DEPT_NAME varchar(10) NOT NULL
+);
+
+#Adding data to Department Table
+INSERT INTO department(ID,DEPT_NAME) VALUES(1,"Admin")
+INSERT INTO department(ID,DEPT_NAME) VALUES(2,"HR")
+INSERT INTO department(ID,DEPT_NAME) VALUES(3,"DEVELOPER")
+INSERT INTO department(ID,DEPT_NAME) VALUES(4,"TESTER")
+INSERT INTO department(ID,DEPT_NAME) VALUES(5,"ACCOUNTS")
+INSERT INTO department(ID,DEPT_NAME) VALUES(6,"BUSINESS ANALYST")
+
+select * from department;
+
+#How to add FOREIGN KEY constraint on a Table?
+FOREIGN KEY constraint on CREATE TABLE
+CREATE TABLE employee(
+    ID int(6) NOT NULL,
+    NAME varchar(10) NOT NULL,
+    ADDRESS varchar(20),
+    DEPT_ID int(6),
+    FOREIGN KEY (DEPT_ID) REFERENCES department(ID)
+);
+
+DESC employee;
+
+Add some data to check FOREIGN KEY constraint
+INSERT INTO employee(ID,NAME,ADDRESS,DEPT_ID) VALUES(1,"Ram","KAKINADA",3)
+INSERT INTO employee(ID,NAME,ADDRESS,DEPT_ID) VALUES(2,"Raju","KAKINADA",9) ----It gives error because in department table no record with id 9.
+
+select * from department;
+
+==========================================================================================
+CHECK
+The CHECK constraint makes sure that all values in a column satisfy a specific condition.
+We can use this constraint on the CREATE and ALTER table command.
+
+How to add CHECK constraint on a column?
+CHECK constraintn on CREATE TABLE
+
+Practical
+CREATE TABLE employee(
+    ID int(6),
+    NAME varchar(10) CHECK(NAME !='Ram'),
+    ADDRESS varchar(20)
+);
+
+#The above code meaning is if we try to insert record where the value of name column is equal to 'Ram' gives an error.
+
+INSERT INTO employee(ID,NAME,ADDRESS) VALUES(1,'Raj',"KAKINADA");
+select * form employee
+INSERT INTO employee(ID,NAME,ADDRESS) VALUES(2,'Ram',"KAKINADA"); ---It gives an error
+
+#Another Example to Restrict the AGE should be greater than 18
+CREATE TABLE employee(
+    ID int(6),
+    NAME varchar(10),
+    AGE varchar(10) CHECK(AGE>18),
+    ADDRESS varchar(20)
+);
+
+==========================================================================================
+DEFAULT
+The DEFAULT constraint is used to set default values for a column when no value is specified.
+The default value will be added to all new records, if no other value is specified.
+We can use this constraint on the CREATE and ALTER table command.
+
+How to add DEFAULT constraint on a column?
+Default constarint on CREATE TABLE
+
+Practical:
+CREATE TABLE employee(
+    ID int(6),
+    NAME varchar(30) DEFAULT 'NEW USER',
+    ADDRESS varchar(20)
+);
+
+DESC employee;
+
+#Add some data to check Default constraint
+INSERT INTO employee(ID, ADDRESS) VALUES(1,'Kakinada')
+
+select * from employee;
 
