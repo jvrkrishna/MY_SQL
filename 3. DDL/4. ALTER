@@ -7,6 +7,7 @@ Generally, we can use the ALTER command for:
     .Rename the column.(Alter with rename)
     .Adding new constraints.(Alter with add)
 
+******************************************************************************************
 ==> Adding a new column:
     We will use AlTER with ADD command for adding new column.
 
@@ -45,6 +46,7 @@ DESC stud_info;
 ALTER table stud_info ADD (Marks INT,Gender CHAR);
 DESC stud_info;
 
+******************************************************************************************
 ==> DELETE an existing column:
     .We will use ALTER with DROP command to delete an existing column.
 
@@ -69,6 +71,7 @@ AlTER table stud_info
 
 DESC stud_info;
 
+******************************************************************************************
 ==> Change column datatype:
     We will use AlTER with MODIFY command to change column datatype.
 
@@ -96,6 +99,7 @@ MODIFY Marks INT,
 MODIFY Gender Varchar(20);
 DESC stud_info;
 
+******************************************************************************************
 ==> Rename the column
     We will use AlTER with RENAME command to rename the column name.
     Syntax:
@@ -110,4 +114,51 @@ DESC stud_info;
 Practical
 ALTER TABLE stud_info  RENAME COLUMN Marks to Mark;
 DESC stud_info;
+
+******************************************************************************************
+SQL Constraints
+    We use SQL constraints to specify the rules for the data in a table.
+    Constraints are used to limit which type of data must be stores in the database.
+    SQL constraints increase the accuracy and reliability of the data stored in the database.
+    Constraints make sure that there is no violation in terms of a transaction of the data.
+
+What if there is any violation found?
+The action gets terminated or aborted.
+
+Constraints in SQL are:
+-->NOT NULL
+-->UNIQUE
+-->PRIMARY KEY
+-->FOREIGN KEY
+-->CHECK
+-->DEFAULT
+
+==========================================================================================
+==>NOT NULL
+    The NOT NULL constraint makes sure that a column cannot have a NULL value.
+    We can use the NOT NULL constraint either creating the table in the database or while modifying it.
+    We can have more than one NOT NULL columns in a table.
+
+    HOW to add NOT NULL constraint to column/columns?
+    -->NOT NULL constraint on CREATE TABLE
+
+Practical:
+       CREATE TABLE employee(
+        ID int(6) NOT NULL,
+        NAME varchar(10) NOT NULL,
+        ADDRESS varchar(20)
+       );
+
+    DESC employee;
+    
+    INSERT INTO employee(ID,NAME,ADDRESS) values(1,'Ram','Kakinada');
+    INSERT INTO employee(ID,NAME,ADDRESS) values(NULL,'Ram','Kakinada'); ---Raises error id cannot be null.
+==========================================================================================
+UNIQUE:
+    The UNIQUE constraint makes sure that all values in a column must be unique.
+    This constraint helps to uniquely identify each row in the table.
+    We can have more than one UNIQUE column in a table.
+    We can use this constraint on the CREATE and ALTER table command.
+
+    
 

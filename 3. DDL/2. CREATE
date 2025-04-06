@@ -11,6 +11,8 @@ DROP DATABASE COLLEGE;
 
 SHOW Databases;
 
+******************************************************************************************
+
 What is Table?
 Table is collection of rows and columns.
 Relation means table.
