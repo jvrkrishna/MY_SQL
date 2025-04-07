@@ -57,7 +57,7 @@ Numeric value can be of int type or float type.
 
 In every datatype has signed and unsigned. In signed we can store +ve and -ve values. In unsigned we can only store +ve values. Bydefault is signed.
 
--->TINYINT (Signed -128 to -127) (unsigned 0 to 255)
+-->TINYINT (Signed -128 to 127) (unsigned 0 to 255)
 -->SMALLINT (signed -32768 to 32767) (unsigned 0 to 65535)
 -->INT/INTEGER (signed -8388608 to 8388607) (unsigned 0 to 16777215)
 -->INT (signed -2142482648 to 2142482647) (unsigned 0 to 4294967295)
