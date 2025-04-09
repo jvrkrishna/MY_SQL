@@ -1,0 +1,26 @@
+INSERT
+    INSERT command is used to add data into the table.
+    We can insert data using various approach.
+
+    SYNTAX:
+        INSERT INTO <table_name> (col_1,col_2,col_3) VALUES(val_1,val_2,val_3);
+
+        INSERT INTO employee(ID,NAME,ADDRESS) VALUES(1,'Ram','Kakinada');
+        select * from employee;
+
+    Another way:
+        INSERT INTO employee VALUES(1,"Raj","KAKINADA");
+        select * from employee;
+    
+    Insert multiple record at a time:
+        INSERT INTO <table_name> (col_1,col_2,col_3) VALUES
+            (val_1,val_2,val_3)
+            (val_1,val_2,val_3)
+            (val_1,val_2,val_3)
+
+        INSERT INTO employee(ID,NAME,ADDRESS) VALUES
+        (1,'Ram','Kakinada'),
+        (2,'Raj','Kakinada'),
+        (3,'Ravi','Kakinada');
+    
+        select * from employee;

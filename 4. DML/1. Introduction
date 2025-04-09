@@ -1,0 +1,13 @@
+DML stands for Data Manipulation Language.
+DML is a subset or sub language of SQL.
+DML is used to add, modify, and delete data in the database.
+
+List of DML command:
+    INSERT
+    UPDATE
+    DELETE
+    MERGE
+    CALL
+    EXPLAIN PLAN
+    LOCK TABLE
+

@@ -1,0 +1,50 @@
+DELETE command is used to delete records from the table.
+By default, the DELETE command will remove all the records from the table, but we can remove specific record based on our requirement.
+
+SYNTAX:
+    DELETE from <table_name> WHERE condition;
+
+******************************************************************************************
+Practical
+    Create table EMP_INFO(
+        ID INT,
+        NAME VARCHAR(20),
+        JDATE DATE,
+        SALARY FLOAT
+    );
+
+    DESC EMP_INFO;
+
+    INSERT INTO EMP_INFO VALUES
+    (1,"Ram","2019-10-22", 25000),
+    (2,"Raju","2020-08-12",8900),
+    (3,"Ravi","2018-07-28",28000),
+    (4,"Rahul",2018-02-21",75000);
+    (5,"Raghu",2018-03-21",61000);
+
+    select * from EMP_INFO;
+
+Q. Delete employees with salaries below 10,000
+DELETE from EMP_INFO WHERE SALARY<10000;
+select * from EMP_INFO;
+
+Q. Delete all employees with salaries between 60,000 to 76,000.
+DELETE from EMP_INFO WHERE SALARY>60000 AND SALARY<76000;
+select * from EMP_INFO;
+
+Q. Delete the employee, whose name is Ram.
+DELETE from EMP_INFO WHERE NAME='Ram';
+
+Q. Delete all records from a table.
+DELETE from EMP_INFO;
+
+By using TRUNCATE command, we can delete all rows. What is the requirement of the DELETE command?
+
+TRUNCATE table emp_info;
+DELETE from emp_info;
+
+We think the above both commands are doing the same work, but the answer is no.
+
+If we use the TRUNCATE command, then all the records will be deleted permanently, so we can't get them again.
+
+If we use the DELETE command, then the deleted records will be stores in the buffer, so we can get themn again by using ROLLBACK command.
