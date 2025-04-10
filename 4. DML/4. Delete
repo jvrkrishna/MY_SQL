@@ -47,4 +47,4 @@ We think the above both commands are doing the same work, but the answer is no.
 
 If we use the TRUNCATE command, then all the records will be deleted permanently, so we can't get them again.
 
-If we use the DELETE command, then the deleted records will be stores in the buffer, so we can get themn again by using ROLLBACK command.
+If we use the DELETE command, then the deleted records will be stores in the buffer, so we can get them again by using ROLLBACK command.
