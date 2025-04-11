@@ -1,0 +1,30 @@
+Operators are mathematical symbols and some reserved word in MYSQL used to perform operation on operand.
+Operand means data.
+Ex: 10+20 ----> here + is operator and 10, 20 called operand (value).
+
+List of Operators:
+    Arithmetic operators (+,-,*,/)
+    Relational operators
+    Logical Operators
+    Set Operators
+    Special Operators
+
+Write a SQL query to display
+Q. Employee name, salary and annual salary of all employees.
+SELECT NAME,SAL,SAL*12 FROM Employee.
+
+Q. Employee name, salary and each day salary of all employees.
+SELECT NAME,SAL,SAL/30 FROM Employee.
+
+Q. Employee name, salary and 10% of the salary as bonus.
+SELECT NAME,SAL,0.10*SAL FROM Employee.
+
+Q. Employee name, salary and 10% of the salary as bonus (use bonus as title).
+SELECT NAME,SAL,0.10*SAL as "10% Bonus" FROM Employee.
+
+Q. Employee name, salary and 5% of salary as TA.
+SELECT NAME,SAL,0.05 as "TA" from Employee.
+
+Q. Employee salary as basic salary then display 3% as TA, 6% as DA, 12% HRA, 8% as COMM, and final salary.
+SELECT NAME,SAL As "BASIC SALARY", 0.03*SAL AS "TA", 0.06*SAL As "DA", 0.12*SAL AS "HRA", 0.08*SAL as "COMM" from Employee.
+

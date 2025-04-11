@@ -1,0 +1,43 @@
+DRL stands for Data Retrieval Language.
+DRL is a sub-language of SQL.
+DRL is used to retrieve the data from the table.
+SELECT command is present inside DRL language.
+
+Select specific columns:
+SELECT <col_1>,<col_2> FROM <table_name>;
+Ex:
+SELECT name,salary from Employee;
+
+Select all Columns:
+SELECT * FROM <table_name>;
+Ex:
+SELECT * from Employee;
+
+SELECT command with WHERE clause:
+SELECT <col_1>,<col_2> FROM <table_name> WHERE condition;
+
+Q. Select name and salary of all the employees.
+SELECT NAME,SAL from Employee;
+
+Q. Select name and joining data of all the employees those who joined after 2021-08-15.
+SELECT NAME,JDATE from Employee;
+SELECT NAME,JDATE from Employee where JDATE>'2021-08-15';
+
+Q. Select all the employees those who joined after 2020.
+SELECT NAME,JDATE from Employee where JDATE>'2020-12-31';
+
+SELECT 6 from Employee;
+
+SELECT 6*6 from Employee;
+
+SELECT "Ram" from Employee;
+
+SELECT NAME from EMployee;
+
+#How to change the name of output title.
+Ex: SELECT all the Name and Sal those who are getting more than 30000.
+SELECT NAME,SAL AS 'SAL MORE THAN 30000' from Employee where SAL>30000.
+
+#How to change the name of multi column output title.
+Ex: SELECT all the Name and Sal those who are getting more than 30000.
+SELECT NAME AS 'EMPLOYEENAME',SAL AS 'EMPSAL' from Employee where SAL>30000.
