@@ -1,0 +1,117 @@
+Set Operators allow you to combine the results of two or more SELECT(queries) statements into a single result set based on set theory principles.
+These operators allow you to perform operations such as combining, interacting, or substacting sets of data.
+Set Operators:
+    UNION
+    UNION ALL
+    INTERSECT
+    MINUS or EXCEPT
+
+UNION:
+    The union operator combines the result sets of two or more SELECT statements into a single result set.
+    It removes duplicate rows from the result set.
+
+    SYNTAX:
+        SELECT column_name(s) from table1
+        UNION
+        SELECT column_name(s) from table2;
+    
+    Rules to use SET Operator:
+        Every SELECT statement must have the same number of columns.
+        The columns must also have similar data types.
+        The column in every SELECT statement must also be in the same order.
+
+    PRACTICAL
+    CREATE TABLE employee (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    salary INT,
+    department VARCHAR(50),
+    dob DATE
+    );
+
+    CREATE TABLE manager (
+    id INT PRIMARY KEY,
+    manager_name VARCHAR(50),
+    salary INT,
+    department VARCHAR(50),
+    dob DATE
+    );
+
+    INSERT INTO employee (id, name, salary, department, dob) VALUES
+    (101, 'Jack', 2000, 'HR', '1997-05-19'),
+    (102, 'Jack', NULL, 'HR', NULL),
+    (103, 'Mack', 6000, 'Developer', '1997-03-10'),
+    (104, 'Peter', 4000, 'Tester', '1998-07-16'),
+    (105, 'Tom', 3000, 'HR', '1998-11-03'),
+    (106, 'Leo', 2500, 'Developer', '1997-10-10'),
+    (107, 'Roger', 5300, 'Accounts', '1997-06-17'),
+    (108, 'Mike', 2000, NULL, '1998-03-09'),
+    (109, 'Paul', 4800, 'Developer', '1998-12-28'),
+    (110, 'Hannah', 2000, 'Accounts', '1999-09-26');
+
+    INSERT INTO manager (id, manager_name, salary, department, dob) VALUES
+    (101, 'Nancy', 4000, 'HR', '1995-09-09'),
+    (102, 'Lucy', 6500, 'HR', '1997-03-10'),
+    (103, 'Mack', 6000, 'Developer', '1997-03-10'),
+    (104, 'Charlie', 9500, 'Tester', '1998-06-24'),
+    (105, 'Tom', 3000, 'HR', '1998-11-03'),
+    (106, 'Exec', NULL, NULL, '1999-12-30');
+
+    Q. Write a SQL query to return all the details of the employees from the employee and manager table. Also remove duplicate records.
+    SELECT * from Employee
+    UNION
+    SELECT * from Manager;
+
+UNION ALL:
+    UNION ALL operator is used to combine the results sets of two or more SELECT statements into a single result set.
+    It retain all rows from all SELECT statements, including any duplicates.
+
+    SYNTAX:
+        SELECT column_name(s) from table1
+        UNION ALL
+        SELECT column_name(s) from table2;
+
+EXCEPT or MINUS:
+    The Except operator returns rows from the result set of the first SELECT statement that are not present in the result set of the second SELECT statement.
+    Ex: Query1-Query2
+    It also eliminates duplicate rows.
+
+    SYNTAX:
+        SELECT column_name(s) from table1
+        EXCEPT or MINUS
+        SELECT column_name(s) from table2;
+
+    Q. Write a SQL query to fetch all the details of the employees who are not manager from the employee table.
+    SELECT column_name(s) from employee
+    EXCEPT
+    SELECT column_name(s) from manager;
+
+INTERSECT:
+    The INTERSECT operator returns the common rows between the result sets of two or more SELECT statements.
+    It only includes rows that appear in all the result sets.
+
+    SYNTAX:
+        SELECT column_name(s) from table1
+        EXCEPT or MINUS
+        SELECT column_name(s) from table2;
+
+    Q. Write a SQL query to return all the details of the employees from the employee table who are manager.
+    SELECT column_name(s) from employee
+    INTERSECT
+    SELECT column_name(s) from manager;
+
+    Q. Write a SQL query to return all the details of the employees from the employee table who are manager where id>104.
+    SELECT column_name(s) from employee WHERE id>104
+    INTERSECT
+    SELECT column_name(s) from manager;
+
+
+    
+
+
+
+
+
+
+
+

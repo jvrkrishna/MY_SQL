@@ -1,14 +1,4 @@
-Operators are mathematical symbols and some reserved word in MYSQL used to perform operation on operand.
-Operand means data.
-Ex: 10+20 ----> here + is operator and 10, 20 called operand (value).
-
-List of Operators:
-    Arithmetic operators (+,-,*,/)
-    Relational operators
-    Logical Operators
-    Set Operators
-    Special Operators
-
+Arithmetic operators (+,-,*,/):
 Write a SQL query to display
 Q. Employee name, salary and annual salary of all employees.
 SELECT NAME,SAL,SAL*12 FROM Employee.

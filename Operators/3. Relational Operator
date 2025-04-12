@@ -1,0 +1,21 @@
+Relational Operators are used to compare values.
+< > = <= >=  are used in relational operators.
+Here we will use a relational operator along with the WHERE clause.
+
+Q. Employee details having salaries less than 25,000.
+SELECT* from EMP_INFO where SAL<25000;
+
+Q. Employee details having salaries less than or equal to 25,000.
+SELECT* from EMP_INFO where SAL<=25000;
+
+Q. Employee details having salaries equal to 75,000
+SELECT * from EMP_INFO where SAL=75000;
+
+Q. Employee details those are not getting 40,000.
+SELECT * from EMP_INFO where NOT SAL=40000
+
+Q. Employee details whose name is RAM.
+SELECT * from EMP_INFO where NAME="RAM";
+
+Q. Employee details who joined on 22nd oct 2022.
+SELECT * from EMP_INFO where JDATE='2022-10-22';
