@@ -1,5 +1,11 @@
 Set Operators allow you to combine the results of two or more SELECT(queries) statements into a single result set based on set theory principles.
 These operators allow you to perform operations such as combining, interacting, or substacting sets of data.
+
+Rules to use SET Operator:
+        Every SELECT statement must have the same number of columns.
+        The columns must also have similar data types.
+        The column in every SELECT statement must also be in the same order.
+
 Set Operators:
     UNION
     UNION ALL
@@ -14,11 +20,6 @@ UNION:
         SELECT column_name(s) from table1
         UNION
         SELECT column_name(s) from table2;
-    
-    Rules to use SET Operator:
-        Every SELECT statement must have the same number of columns.
-        The columns must also have similar data types.
-        The column in every SELECT statement must also be in the same order.
 
     PRACTICAL
     CREATE TABLE employee (
@@ -82,9 +83,9 @@ EXCEPT or MINUS:
         SELECT column_name(s) from table2;
 
     Q. Write a SQL query to fetch all the details of the employees who are not manager from the employee table.
-    SELECT column_name(s) from employee
+    SELECT * from Employee
     EXCEPT
-    SELECT column_name(s) from manager;
+    SELECT * from Manager;
 
 INTERSECT:
     The INTERSECT operator returns the common rows between the result sets of two or more SELECT statements.
@@ -96,14 +97,14 @@ INTERSECT:
         SELECT column_name(s) from table2;
 
     Q. Write a SQL query to return all the details of the employees from the employee table who are manager.
-    SELECT column_name(s) from employee
+    SELECT * from employee
     INTERSECT
-    SELECT column_name(s) from manager;
+    SELECT * from manager;
 
     Q. Write a SQL query to return all the details of the employees from the employee table who are manager where id>104.
-    SELECT column_name(s) from employee WHERE id>104
+    SELECT * from employee WHERE id>104
     INTERSECT
-    SELECT column_name(s) from manager;
+    SELECT * from manager;
 
 
     

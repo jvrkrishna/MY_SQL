@@ -12,7 +12,7 @@ Q. Employee details having salaries equal to 75,000
 SELECT * from EMP_INFO where SAL=75000;
 
 Q. Employee details those are not getting 40,000.
-SELECT * from EMP_INFO where NOT SAL=40000
+SELECT * from EMP_INFO where NOT SAL=40000;
 
 Q. Employee details whose name is RAM.
 SELECT * from EMP_INFO where NAME="RAM";
