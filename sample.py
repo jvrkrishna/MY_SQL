@@ -7,6 +7,10 @@
 #     => DROP view
 #     => DROP index
 
+count
+
+@@TRANcount
+
 
 
 
