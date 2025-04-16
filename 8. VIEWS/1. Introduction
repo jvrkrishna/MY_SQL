@@ -1,0 +1,49 @@
+View is virtual table constructed from existing table or tables.
+A view can be created from one or more tables which depends on the written SQL query to create a view.
+A view can contain all rows of a table or selected rows from a table.
+Most of the operations that can carried on a table can be carried out on view. Any updating of rows in the table will automatically reflect in the view.
+Changes made in table reflects on view (100%).
+Changes made in view reflects on table (But the columns are same in both view  and table).
+
+Adv:
+    provide data security and confidentally.
+    view use little storage space.
+    provides a customised view for user.
+    Redundancy problem does not arise.
+
+Dis-adv:
+    Cannot be indexed.
+    May or Maynot be directly updatable.
+
+SYNTAX:
+    Create view <viewname> as select <cols-list> from <tablename> where <condition>;
+
+Example:
+    Create view empview as select RNO,NAME from EMP_INFO;
+    show tables;
+    select * from stdview;
+
+Example:
+    Create view My_students as select * from students where branch="ece";
+
+Example:
+    CREATE VIEW high_salary_employees AS
+SELECT first_name, last_name, salary
+FROM employees
+WHERE salary > 80000;
+
+
+To drop view:
+    Drop view <view_name>;
+
+Ex:
+    Drop view empview;
+
+To update view:
+Ex:
+    UPDATE employee_view
+    SET salary = 90000
+    WHERE id = 1;
+    
+
+

@@ -1,0 +1,39 @@
+Creating INDEX statement in sql is used to create indexes in tables.
+The indexes are used to retrieve data from the database more quickly than others.
+The user can not see the indexes, and they are just used to speed up queries/ searches.
+Note: Updating the table with indexes takes a lot of time than updating a table without indexes. It is because the indexes also need an update.
+So, only create indexes on those columns that will be frequently searched against.
+
+use College;
+show tables;
+
+select * from EMP_INFO;
+Create Index Syntax:
+    Create Index <Index_Name> on table (<Column_name>)
+
+Q. Create Employee Data whose salary is more than 8000.
+create index salary_index on EMP_INFO (salary asc);
+
+select * from EMP_INFO where salary>8000;
+
+-- Create a unique index
+CREATE UNIQUE INDEX idx_unique_column ON tablename(columnname);
+
+-- Add an index when creating a table
+CREATE TABLE tablename (
+    id INT,
+    name VARCHAR(50),
+    INDEX idx_name(name)
+);
+
+To view the indexes:
+    SHOW INDEX FROM table_name;
+    SHOW INDEX FROM employees;
+
+DROP Index:
+    DROP INDEX idx_columnname ON tablename;
+
+Example:
+Let's say you have a table called employees with an index named idx_lastname on the last_name column.
+To drop that index: 
+    DROP INDEX idx_lastname ON employees;
