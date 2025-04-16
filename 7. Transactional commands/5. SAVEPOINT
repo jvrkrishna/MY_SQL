@@ -1,0 +1,23 @@
+#SAVEPOINT
+    This command allow us to set a point a transaction to which you can later roll back.
+
+    BEGIN ---------- . -------------- . --------------- . ------------- ROLLBACK
+            Savepoint 1     Savepoint 2       Savepoint n
+
+    It is useful when we want to undo part of a tranasaction without rolling back the entire transaction.
+
+    SYNTAX:
+        SAVEPOINT savepoint_name;
+
+    Example:
+        START TRANSACTION;
+        update EMP_INFO set salary =5999 where id=101;
+        update EMP_INFO set salary =6000 where id=103;
+        select * from EMP_INFO;
+
+        SAVEPOINT sal_save;
+
+        update EMP_INFO set name ="RAJU" where id=103;
+        select * from EMP_INFO;
+
+        #From the above we have three options 1 is to commit, 2 is to rollback entire transaction form starting, 3 to rollback to specific savepoint.

@@ -1,0 +1,10 @@
+#Rollback TO:
+    After setting a savepoint, you can roll back to it using.
+
+    SYNTAX:
+        ROLLBACK TO savepoint_name;
+    Example:
+        ROLLBACK TO sal_save;
+
+    #TO COMMIT or to stop transactions.
+    COMMIT;

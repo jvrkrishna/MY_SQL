@@ -1,0 +1,9 @@
+#COMMIT:
+    This command is used to permanently save the changes made during the current transaction.
+    Once a transaction is committed, its changes are made permanent and cannot be rolled back.
+
+    #If we no need to rollback (commit to save changes without rollback)
+    commit;
+
+    #To know the Transactions
+    select @@Trancount

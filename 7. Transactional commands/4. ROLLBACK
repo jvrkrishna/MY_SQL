@@ -1,0 +1,56 @@
+#Rollback:
+    This command is used to undo the changes made during the current transaction.
+    It rolls back the transaction to its starting point, discarding any modifications made with in the transaction.
+
+    SYNTAX:
+    Rollback;
+
+    Q. How to Rollback a query in MYSQL?
+    #Run the below command to start transaction. Without starting transaction we cannot rollback.
+    begin tran;
+
+    #Update something to check the rollback.
+    update emp set salary =5000 where id=101;
+
+    #To rollback
+    rollback;
+
+******************************************************************************************
+#Start the transaction
+Start transaction;
+
+#Perform some sql operation
+INSERT INTO employee(NAME,DEPT) values("Ram","trainer");
+UPDATE employee SET department="HR" where Name="Ram";
+
+#If everything is correct, wither commit the transaction
+COMMIT;
+
+or
+
+#If there is an error, rollback the transaction.
+ROLLBACK;
+******************************************************************************************
+
+#Auto commit mode
+    As we know By default all DDL command are auto committed.
+    Bt default, many databases operate in auto commit mode, where each individual SQL statements is automatically committed.
+    In auto commit mode each SQL statement is transaction.
+    To execute multiple statements as single transaction, we must explicitly start the transaction.
+
+    START TRANSACTION;
+    BEGIN;
+
+#TO disable Auto commit mode:
+    SET autocommit=0;
+
+        or
+    SET autocommit OFF;
+
+#TO enable Auto commit mode:
+    SET autocommit=1;
+
+        or
+    SET autocommit ON;
+
+#### We cannot disable auto commit mode of DDL commands.

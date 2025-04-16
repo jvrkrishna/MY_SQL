@@ -35,6 +35,9 @@ select * from EMP_INFO;
 Q. Delete the employee, whose name is Ram.
 DELETE from EMP_INFO WHERE NAME='Ram';
 
+Q. Delete Duplicates
+Delete e1 from EMP_INFO e1, EMP_INFO e2 where e1.EMPNAME =e2.EMPNAME and e1.EMPID>e2.EMPID
+
 Q. Delete all records from a table.
 DELETE from EMP_INFO;
 
@@ -47,4 +50,4 @@ We think the above both commands are doing the same work, but the answer is no.
 
 If we use the TRUNCATE command, then all the records will be deleted permanently, so we can't get them again.
 
-If we use the DELETE command, then the deleted records will be stores in the buffer, so we can get them again by using ROLLBACK command.
+If we use the DELETE command, then the deleted records will be stores in the buffer, so we can get them again by using ROLLBACK command(We will see in Transactional commands).
