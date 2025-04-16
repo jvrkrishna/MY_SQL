@@ -1,6 +1,6 @@
 #Start Transaction:
     This command marks the beginning of a transaction.
-    All the subsequent SQL statements/queries with in the same session will be considered part of the same session will be considered part of the same transaction until it is either committed or rolled back.
+    All the subsequent SQL statements/queries with in the same session will be considered part of the same transaction until it is either committed or rolled back.
 
     Note: Without beginning the transaction we cannot rollback.
 
