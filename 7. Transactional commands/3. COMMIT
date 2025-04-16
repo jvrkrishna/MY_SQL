@@ -5,5 +5,26 @@
     #If we no need to rollback (commit to save changes without rollback)
     commit;
 
-    #To know the Transactions
-    select @@Trancount;
+    
+#Auto commit mode
+    As we know By default all DDL command are auto committed.
+    Bt default, many databases operate in auto commit mode, where each individual SQL statements is automatically committed.
+    In auto commit mode each SQL statement is transaction.
+    To execute multiple statements as single transaction, we must explicitly start the transaction.
+
+    START TRANSACTION;
+    BEGIN;
+
+#TO disable Auto commit mode:
+    SET autocommit=0;
+
+        or
+    SET autocommit OFF;
+
+#TO enable Auto commit mode:
+    SET autocommit=1;
+
+        or
+    SET autocommit ON;
+
+#### We cannot disable auto commit mode of DDL commands.
