@@ -14,3 +14,5 @@
 
     #To know the Transactions
     select @@Trancount;
+    show session status like 'Com_commit';
+    show session status like 'Com_rollback';
