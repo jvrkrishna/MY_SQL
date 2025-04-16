@@ -8,6 +8,9 @@
     rollback-------- Revert the changes.
 
     Syntax:
-    Start transaction;(or)
-    Begin;(or)
+    START TRANSACTION;(or)
+    BEGIN;(or)
     Begin transaction;
+
+    #To know the Transactions
+    select @@Trancount;

@@ -6,4 +6,4 @@
     commit;
 
     #To know the Transactions
-    select @@Trancount
+    select @@Trancount;

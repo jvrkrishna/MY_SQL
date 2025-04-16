@@ -7,10 +7,11 @@
 
     Q. How to Rollback a query in MYSQL?
     #Run the below command to start transaction. Without starting transaction we cannot rollback.
-    begin tran;
+    BEGIN;
 
     #Update something to check the rollback.
     update emp set salary =5000 where id=101;
+    select * from emp;
 
     #To rollback
     rollback;
@@ -23,7 +24,7 @@ Start transaction;
 INSERT INTO employee(NAME,DEPT) values("Ram","trainer");
 UPDATE employee SET department="HR" where Name="Ram";
 
-#If everything is correct, wither commit the transaction
+#If everything is correct, wether commit the transaction
 COMMIT;
 
 or
