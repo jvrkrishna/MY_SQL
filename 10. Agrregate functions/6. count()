@@ -1,0 +1,14 @@
+This function return the no.of records in the table.
+
+Syntax:
+    select count(expression) from <table_name> where <condition>;
+
+Ex: * means all columns
+    select count(sal) from EMP_INFO;
+    select count(*) from EMP_INFO;
+    select count(place) from EMP_INFO;
+
+    select count(DISTINCT place) from EMP_INFO; ---- distinct means unique
+    select DISTINCT place from EMP_INFO:
+
+    select count(emp_id) from EMP_INFO where designation="Manager";

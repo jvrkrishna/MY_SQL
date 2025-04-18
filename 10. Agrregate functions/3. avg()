@@ -1,0 +1,5 @@
+This function is used to get the average value of the numeric column.
+Syntax:
+    select avg(column_name) from <table_name>;
+Ex:
+    select avg(sal) from EMP_INFO;

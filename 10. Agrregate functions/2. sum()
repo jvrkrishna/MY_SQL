@@ -1,0 +1,7 @@
+This functions is used to get the sum of numeric column.
+Syntax:
+    select sum(column_name) from <tablename>;
+Ex:
+    select sum(Sal) from EMP_INFO;
+
+    

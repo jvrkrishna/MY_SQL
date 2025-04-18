@@ -1,0 +1,26 @@
+In MySQL, the CALL command is used to invoke a stored procedure. Stored procedures are pre-defined SQL code blocks that you can execute repeatedly with optional parameters.
+
+SYNTAX:
+    CALL procedure_name([parameter1, parameter2, ...]);
+
+Example:
+Suppose you have a stored procedure like this:
+    create procedure 'get_Stu_info' ()
+    BEGIN
+    select * from student;
+    END
+
+    call get_Stu_info;
+
+Notes:
+You can pass IN, OUT, and INOUT parameters.
+
+You must use DELIMITER to define procedures if they contain semicolons inside.
+
+Example:
+    create procedure 'get_Stu_info' (in get int)
+    BEGIN
+    select * from student where student.age=age;
+    END
+
+    call get_Stu_info(4);

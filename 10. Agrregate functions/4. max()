@@ -1,0 +1,7 @@
+This function is used to get max value from a column.
+Syntax:
+    select max(column_name) from <table_name>;
+Ex:
+    select max(sal) from EMP_INFO;
+
+    

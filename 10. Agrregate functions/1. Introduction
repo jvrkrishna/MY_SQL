@@ -1,0 +1,11 @@
+Aggregate functions are built in functions that operate on groups of rows and return one value for the entire group or table.
+The SQL aggregate functions return a single value, calculated from values in a column.
+These functions are used for produce summarised results.
+These functions are also known as group functions.
+
+Types of aggregate functions:
+    sum()
+    avg()
+    max()
+    min()
+    count()

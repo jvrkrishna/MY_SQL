@@ -1,0 +1,4 @@
+In MySQL, a MERGE operation is typically done using the INSERT ... ON DUPLICATE KEY UPDATE or the REPLACE INTO statements, because MySQL doesn't have a direct MERGE keyword like SQL Server.
+
+select * from EMP_INFO;
+select first_name,last_name, concat(first_name," ",last_name) as fullname from EMP_INFO;

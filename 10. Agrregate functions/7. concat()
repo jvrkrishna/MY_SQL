@@ -1,0 +1,6 @@
+This functions is used to concat the columns.
+Syntax:
+    select concat(column_name1, column_name2) from <tablename>;
+Ex:
+    select concat(first_name," ",last_name) as full_name from EMP_INFO;
+    
