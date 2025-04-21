@@ -21,7 +21,7 @@ SYNTAX:
 Example:
     Create view empview as select RNO,NAME from EMP_INFO;
     show tables;
-    select * from stdview;
+    select * from empview;
 
 Example:
     Create view My_students as select * from students where branch="ece";
