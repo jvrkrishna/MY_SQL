@@ -1,0 +1,114 @@
+#INOUT PARAMETER:
+    In MySQL, the INOUT parameter is used in stored procedures or functions to pass parameters that can both be input (received by the procedure) and output (modified by the procedure). This is different from an IN parameter, which only passes data into the procedure, or an OUT parameter, which only passes data back.
+
+Input: The value is passed into the procedure when it is called.
+
+Output: The procedure can modify this value, and the changes are reflected outside the procedure after execution.
+
+Example:
+DELIMITER $$
+    CREATE PROCEDURE update_salary(INOUT salary DECIMAL(10,2))
+    BEGIN
+    -- Add 10% to the salary
+    SET salary = salary * 1.10;
+    END $$
+DELIMITER ;
+
+SET @product_salary = 100.00;
+CALL update_salary(@product_salary);
+SELECT @product_salary;
+
+
+
+Example:
+Step-by-step Approach:
+Create the table (sample1).
+
+Insert sample data into the table.
+
+Create a stored procedure that uses the INOUT parameter to modify the salary based on the id.
+
+Step 1: Create the sample1 Table
+CREATE TABLE sample1 (
+    id INT(6),
+    name VARCHAR(30),
+    salary INT(10)
+);
+
+Step 2: Insert Sample Data
+INSERT INTO sample1 (id, name, salary) 
+VALUES
+(1, 'Ram', 13000),
+(2, 'Raju', 34230);
+
+Step 3: Create the Stored Procedure Using INOUT Parameter
+The stored procedure will accept the id and the new_salary as an INOUT parameter. The procedure will check if the id exists in the table, update the salary, and then return the modified salary through the INOUT parameter.
+
+DELIMITER $$
+CREATE PROCEDURE update_salary(
+    INOUT emp_id INT(6), 
+    INOUT new_salary INT(10)
+)
+BEGIN
+    DECLARE current_salary INT(10);
+    
+    -- Fetch the current salary based on the given id
+    SELECT salary INTO current_salary FROM sample1 WHERE id = emp_id;
+
+    -- If employee exists, update salary, otherwise return a message
+    IF current_salary IS NOT NULL THEN
+        -- Update the salary
+        UPDATE sample1 
+        SET salary = new_salary
+        WHERE id = emp_id;
+        
+        -- Return the updated salary
+        SET new_salary = new_salary;
+    ELSE
+        -- If employee doesn't exist, return a message (can also return a specific error code)
+        SET new_salary = -1; -- Assuming -1 indicates error or non-existence of the employee
+    END IF;
+END $$
+
+DELIMITER ;
+
+Step 4: Call the Stored Procedure
+You can now call the procedure, passing the id and the new_salary as INOUT parameters. After calling, the new_salary will contain the updated value.
+
+-- Declare variables for id and salary
+SET @emp_id = 1;
+SET @new_salary = 15000;
+
+-- Call the procedure
+CALL update_salary(@emp_id, @new_salary);
+
+-- Check the updated salary
+SELECT @new_salary;  -- It should return the updated salary if the id exists
+
+Step 5: Verify the Changes in the Table
+After the procedure is executed, you can check the sample1 table to verify that the salary has been updated:
+
+SELECT * FROM sample1;
+Expected Output:
+Before calling the procedure:
+
++----+-------+--------+
+| id | name  | salary |
++----+-------+--------+
+|  1 | Ram   | 13000  |
+|  2 | Raju  | 34230  |
++----+-------+--------+
+After calling the procedure with emp_id = 1 and new_salary = 15000, the table should be:
+
++----+-------+--------+
+| id | name  | salary |
++----+-------+--------+
+|  1 | Ram   | 15000  |
+|  2 | Raju  | 34230  |
++----+-------+--------+
+The new_salary parameter should also return 15000 as the modified salary.
+
+Notes:
+If you pass an id that doesn't exist, the procedure will set new_salary to -1 to indicate an error or non-existent employee.
+
+This is a simple demonstration; you can add more error handling, validations, and checks based on your use case.

@@ -1,0 +1,27 @@
+In MySQL, the CALL command is used to invoke a stored procedure. A stored procedure is a group of SQL statements. If you have a situation, where you write the same query again and again, you can save that specific query as a stored procedure and call by its name.
+You must use DELIMITER to define procedures if they contain semicolons inside.
+
+#HOW TO CREATE STORE PROCEDURE:
+    DELIMITER $$
+        CREATE PROCEDURE `get_Stu_info` ()
+        BEGIN
+        SELECT * FROM EMP_INFO;
+        END $$
+    DELIMITER ;
+
+Another Example:
+    DELIMITER $$
+        CREATE PROCEDURE `get_Stu_address` ()
+        BEGIN
+        SELECT Address FROM EMP_INFO;
+        END $$
+    DELIMITER ;
+
+#HOW TO EXECUTE STORE PROCEDURE:
+    call get_Stu_info;
+
+#HOW TO DROP THE PROCEDURE:
+    DROP procedure if exists get_Stu_info;
+
+Notes:
+You can pass IN, OUT, and INOUT parameters.
