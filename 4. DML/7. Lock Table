@@ -1,0 +1,95 @@
+In MySQL, locks are used to control concurrent access to database objects like tables and rows, preventing conflicts and ensuring data consistency. The LOCK TABLES statement allows explicit table-level locking, while InnoDB storage engine uses row-level locking. MySQL also uses metadata locks to manage concurrent changes to database structures. 
+
+Types of Locks:
+--Table-level locks:
+    Used by MyISAM, MEMORY, and MERGE engines to control access to entire tables, allowing only one session to update a table at a time. 
+--Row-level locks:
+    InnoDB uses row-level locking, providing fine-grained control and higher concurrency compared to table-level locking. 
+--Metadata locks:
+    These locks manage concurrent changes to database structures (like schemas, tables, and stored procedures) and are used for operations like ALTER TABLE. 
+--Record locks:
+    InnoDB uses record locks on index records to prevent other transactions from modifying those rows. 
+
+LOCK TABLES table_name1 READ, table_name2 WRITE;
+
+This example locks table_name1 for reading (other sessions can read but not modify) and table_name2 for writing (other sessions can't read or write). 
+
+Key Concepts:
+    Read locks: Allow concurrent reading but prevent modifications. 
+
+    Write locks: Prevent both reading and writing, providing exclusive access. 
+
+    Deadlocks: Can occur if multiple sessions try to acquire locks in conflicting orders. 
+
+    Lock granularity: The level of detail at which a lock is acquired (e.g., row, table, or metadata). 
+
+Metadata Locking:
+    Metadata locks ensure consistency when altering database structures. 
+    They are used for operations like ALTER TABLE and DDL statements. 
+
+Practical:
+select connection_id();
+show databases;
+use employee;
+show tables;
+select * from emp_info;
+lock table emp_info READ;
+
+insert into emp_info value(4,"Raju","KKD",45000); 
+
+unlock tables;
+lock table emp_info WRITE;
+
+    🔒 1. Locking and Unlocking Tables
+This locks entire tables, preventing other sessions from reading or writing (depending on the lock type).
+
+✅ Lock a Table
+LOCK TABLES employees WRITE;   -- or READ
+
+WRITE: Only your session can read and write.
+READ: Your session can read, others can't write.
+
+✅ Unlock Tables
+
+UNLOCK TABLES;
+⚠️ Note: While tables are locked, no other queries can modify or access them depending on the lock level. Also, once you run UNLOCK TABLES or end the session, the lock is released.
+
+🔐 2. Locking and Unlocking Rows (InnoDB only)
+This is much more common and better for concurrency. You lock specific rows inside a transaction.
+
+✅ Lock a Row (for update)
+START TRANSACTION;
+
+SELECT * FROM employees WHERE id = 5 FOR UPDATE;
+-- This locks that row for update by any other session
+
+-- Do your update or logic here
+
+COMMIT;
+✅ Lock a Row (for read)
+
+START TRANSACTION;
+
+SELECT * FROM employees WHERE id = 5 LOCK IN SHARE MODE;
+-- Allows other reads, but blocks writes
+
+COMMIT;
+FOR UPDATE: Exclusive lock (blocks reads and writes by others).
+
+LOCK IN SHARE MODE: Shared lock (allows others to read, but blocks updates).
+
+🚪 Unlocking Row Locks
+You don’t need a special command. Just:
+
+COMMIT;
+or
+ROLLBACK;
+
+That ends the transaction and automatically releases the row locks.
+
+🔁 Bonus: Advisory Lock (for anything custom)
+-- Lock
+SELECT GET_LOCK('my_lock_name', 10);  -- waits up to 10 sec
+
+-- Unlock
+SELECT RELEASE_LOCK('my_lock_name');

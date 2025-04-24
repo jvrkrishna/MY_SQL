@@ -10,6 +10,3 @@ List of DML command:
     CALL
     EXPLAIN PLAN
     LOCK TABLE
-
-    join
-

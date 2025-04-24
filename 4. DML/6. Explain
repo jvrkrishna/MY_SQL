@@ -1,0 +1,10 @@
+In MySQL, EXPLAIN (or EXPLAIN PLAN) is a command that shows how MySQL executes a query. It's a key tool for analyzing and optimizing SQL queries, helping you understand:
+
+Which indexes are used (or not used)
+The order in which tables are read (join order)
+The estimated number of rows MySQL will need to examine
+Whether temporary tables or filesorts are used
+
+---->DESC EMP_info;
+show  indexes from emp_info;
+explain SELECT Name from emp_info where salary='10k';
