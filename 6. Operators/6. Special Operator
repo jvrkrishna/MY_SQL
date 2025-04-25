@@ -37,4 +37,75 @@ IN and NOT IN Operator:
     SELECT * from EMP_INFO where SAL IN(25000,50000,75000);
 
 LIKE and NOT LIKE Operators:
+    The like operator is used to search for specified patterns within column values.
+    The like operator is used along with the WHERE clause.
+    Searching for character is known as a pattern.
+
+    The like operator uses two symbols to search for patterns.
+    i. Underscore(start_value)--> represents any one character.
+    ii. Percentile(%)--> represent zero or any number of character.
+    These 2 special symbols are called as wildcard characters.
+
+    Q. all  employees details who are getting 4-digit salaries.
+    select * from EMP_INFO where sal like '____';
+
+    Q. all  employees details who are not  getting 4-digit salaries.
+    select * from EMP_INFO where sal not like '____';
+
+    Q. all employees details whose salary starts with 5.
+    select * from EMP_INFO where sal like '5%';
+
+    Q. all employees details whose name starts with 's'.
+    select * from EMP_INFO where name like 's%';
+
+    Q. all employees details whose name ends with 'a'.
+    select * from EMP_INFO where name like '%a';
+
+    Q. all employees details whose name end with 'nka'.
+    select * from EMP_INFO where name like '%nka';
+
+    Q. all employees details whose name end with 'nka'.
+    select * from EMP_INFO where name like '%nka';
+
+    Q. all employees details whose name starts with 'P' and ends with 'a'
+    select * from EMP_INFO where name like 'P%a';
+
+    Q. all employees details name contain a letter 'u' in between the first and last characters.
+    select * from EMP_INFO name k=like '%u%';
+
+    Q. all employees names have 8 characters, and the second character should be 'u'.
+    select * from EMP_INFO where name like '_u______';
+
+    Q. all employees details whose join in the year 2020.
+    select * from EMP_INFO JDATE like '2020%';
+
+    Q. all employees details whose name starts with S and exactly 4 characters long.
+    select * from EMP_INFO where name like 's___';
+
+IS NULL and IS NOT NULL operator:
+    IS NULL operator is used to check NULL value in a specific column.
+    NULL value means missing value.
+    NULL value is not equals to zero.
+
+    Syntax: 
+        SELECT <col_1>,<col_2> form <table_name> where col is NULL.
+
+    Q. all employees details whose email if IS NULL.
+    select * form EMPLOYEE where EMAIL IS NULL;
+
+    Q. all employees details whose email and address IS NULL.
+    select * from EMPLOYEE where Email IS NULL and ADDRESS IS NULL.
+
+    Q. all employees details whose email IS NOT NULL.
+    select * form EMPLOYEE where EMAIL IS NOT NULL;
+
+
+
+
+
+
+
+
+
+
     
