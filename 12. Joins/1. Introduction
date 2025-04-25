@@ -1,0 +1,172 @@
+In MySQL, joins are used to combine rows from two or more tables based on a related column between them, allowing you to retrieve data from multiple tables in a single query. This is achieved by linking tables based on common columns, usually a primary key in one table and a foreign key in another. 
+
+Why use joins?
+Retrieve data from multiple tables:
+    Joins enable you to pull data from different tables and combine it into a single result set.
+
+Establish relationships:
+    They help establish relationships between tables based on shared columns, creating a logical connection between the data. 
+
+Efficient data querying:
+    Joins make it easier to query data across multiple tables without needing to run separate queries for each table. 
+
+Access related information:
+    They allow you to access information related to specific records, such as retrieving customer details along with their orders. 
+
+Types of joins in MySQL:
+Inner Join or JOIN:
+    Returns only the rows where there is a match in both tables based on the join condition. This is the most common type of join. 
+
+Outer Join:
+    (also known as Left or Right Join) Returns all rows from one table (the "outer" table) and the matching rows from the other table. If there's no match in the second table, the join will still return the row from the outer table, but with NULL values for columns from the other table. 
+
+Left Outer Join (Left Join):
+    Returns all rows from the left table and the matching rows from the right table. 
+
+Right Outer Join (Right Join):
+    Returns all rows from the right table and the matching rows from the left table. 
+
+Full Outer Join:
+    Returns all rows from both tables, including those that don't have a match in the other table. 
+
+Cross Join:
+    Returns the Cartesian product of the two tables, meaning every row from the first table is combined with every row from the second table, resulting in a large result set. 
+
+Self Join:
+    Joins a table with itself, allowing you to compare rows within the same table based on specific conditions. 
+
+*****************************************************************************
+Practical:
+    create database HTS;
+    show databases;
+    use HTS;
+    *************************************************************************
+    Creating tables
+
+Table 1: employees
+
+CREATE TABLE employees (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(100),
+    salary DECIMAL(10, 2),
+    dept_id INT,
+    manager_id INT
+);
+
+Table 2: managers
+CREATE TABLE managers (
+    manager_id INT PRIMARY KEY,
+    manager_name VARCHAR(100),
+    dept_id INT
+);
+
+Table 3: departments
+CREATE TABLE departments (
+    dept_id INT PRIMARY KEY,
+    dept_name VARCHAR(100)
+);
+
+Table 4: projects
+CREATE TABLE projects (
+    project_id INT PRIMARY KEY,
+    project_name VARCHAR(100),
+    team_member_id INT
+);
+This assumes team_member_id refers to an emp_id from the employees table.
+
+    *************************************************************************
+    Inserting values into the tables
+
+🔹 Insert into departments
+INSERT INTO departments (dept_id, dept_name) VALUES
+(1, 'Engineering'),
+(2, 'Human Resources'),
+(3, 'Marketing'),
+(4, 'Finance'),
+(10, 'Technician');
+
+🔹 Insert into managers
+INSERT INTO managers (manager_id, manager_name, dept_id) VALUES
+(101, 'Alice Johnson', 1),
+(102, 'Bob Smith', 2),
+(103, 'Catherine Lee', 3);
+-- No manager for dept_id 4 to test LEFT JOIN
+
+🔹 Insert into employees
+INSERT INTO employees (emp_id, emp_name, salary, dept_id, manager_id) VALUES
+(1, 'John Doe', 60000, 1, 101),
+(2, 'Jane Smith', 55000, 1, 101),
+(3, 'Samuel Green', 50000, 2, 102),
+(4, 'Nina Patel', 52000, 3, 103),
+(5, 'Luke Brown', 48000, 4, NULL),  -- Employee in a dept with no manager
+(6, 'Emily Davis', 51000, 2, 102),
+(7, 'John Ram', 70000, 5, 101);
+
+🔹 Insert into projects
+INSERT INTO projects (project_id, project_name, team_member_id) VALUES
+(201, 'Apollo Upgrade', 1),
+(202, 'HR Revamp', 3),
+(203, 'Marketing Blitz', 4),
+(204, 'Finance Audit', 5),
+(205, 'Onboarding Automation', 6),
+(206, 'System Overhaul', NULL); -- Project with no assigned team member
+
+select * from employees;
+select * from departments;
+select * from managers;
+select * from projects;
+
+Syntax for inner join/JOIN:
+    SELECT 
+        table1.column1, 
+        table2.column2, 
+        ...
+    FROM 
+        table1
+    INNER JOIN 
+        table2
+    ON 
+        table1.common_column = table2.common_column;
+
+*****************************************************************************
+INNER join --> Fetches all the matching records
+Left Join --> inner Join + additional record from left table
+Right Join --> inner Join + additional records from right table
+
+Q. -- I need to fetch two tables that are employees and departments.
+-- inner join /JOIN
+select e.emp_name, d.dept_name
+from employees e
+join departments d on e.dept_id = d.dept_id;
+
+Q. -- Fetch All the employee name and the department name they belong to.
+-- left join=inner join + any additional records in the left table.
+select e.emp_name, d.dept_name
+from employees e
+left join departments d on e.dept_id = d.dept_id;
+
+Q. -- Fetch All the employee name and the department name they belong to.
+-- right join=inner join + any additional records in the right table.
+select e.emp_name, d.dept_name
+from employees e
+right join departments d on e.dept_id = d.dept_id;
+
+Q. -- Fetch details of All emp, their manager, their department and the projects they work on.
+-- step 1
+select e.emp_name, d.dept_name
+from employees e
+left join departments d on e.dept_id=d.dept_id;
+
+-- step 2
+select e.emp_name, d.dept_name,m.manager_name
+from employees e
+left join departments d on e.dept_id=d.dept_id
+inner join managers m on m.manager_id=e.manager_id;
+
+-- step 3
+select e.emp_name, d.dept_name,m.manager_name,p.project_name
+from employees e
+left join departments d on e.dept_id=d.dept_id
+inner join managers m on m.manager_id=e.manager_id
+left join projects p on p.team_member_id=e.emp_id;
+
