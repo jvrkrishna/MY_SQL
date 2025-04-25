@@ -46,8 +46,8 @@ This locks entire tables, preventing other sessions from reading or writing (dep
 ✅ Lock a Table
 LOCK TABLES employees WRITE;   -- or READ
 
-WRITE: Only your session can read and write.
-READ: Your session can read, others can't write.
+READ lock: Other sessions can read from the table but cannot write.
+WRITE lock: The current session can read and write; other sessions cannot read or write.
 
 ✅ Unlock Tables
 
@@ -93,3 +93,4 @@ SELECT GET_LOCK('my_lock_name', 10);  -- waits up to 10 sec
 
 -- Unlock
 SELECT RELEASE_LOCK('my_lock_name');
+
