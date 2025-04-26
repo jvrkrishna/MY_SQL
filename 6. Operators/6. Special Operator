@@ -64,9 +64,6 @@ LIKE and NOT LIKE Operators:
     Q. all employees details whose name end with 'nka'.
     select * from EMP_INFO where name like '%nka';
 
-    Q. all employees details whose name end with 'nka'.
-    select * from EMP_INFO where name like '%nka';
-
     Q. all employees details whose name starts with 'P' and ends with 'a'
     select * from EMP_INFO where name like 'P%a';
 
@@ -91,7 +88,7 @@ IS NULL and IS NOT NULL operator:
         SELECT <col_1>,<col_2> form <table_name> where col is NULL.
 
     Q. all employees details whose email if IS NULL.
-    select * form EMPLOYEE where EMAIL IS NULL;
+    select * from EMPLOYEE where EMAIL IS NULL;
 
     Q. all employees details whose email and address IS NULL.
     select * from EMPLOYEE where Email IS NULL and ADDRESS IS NULL.
