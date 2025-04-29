@@ -19,7 +19,6 @@ CALL update_salary(@product_salary);
 SELECT @product_salary;
 
 
-
 Example:
 Step-by-step Approach:
 Create the table (sample1).
