@@ -1,104 +1,98 @@
-In MYSQL datatypes are generally classified into 3types:
-1. String
-2. Numeric
-3. Data and Time
+🗃️ MySQL Data Types
+In MySQL, data types are generally classified into three categories:
 
-******************************************************************************************
-1. String Datatype:
-    .If we want to store char or group of char, then we should use string.
-    .In MYSQL we don't have direct String type, they have categorised in different names.
--->char
--->varchar
--->TEXT
--->BINARY
--->BLOB
--->ENUM
--->SET
+1. String Data Types
+2. Numeric Data Types
+3. Date and Time Data Types
 
--->CHAR
-    .It is used to store fixed length of characters.
-    .It can store alphabets, numbers, digits and special symbols.
-    .Size is 0 to 255
-    .Default size is 1.
-    .CHAR is static in nature.
-    .For each CHAR, CHAR datatype will take 1 byte of memory.
-    .If we know the exact length of the string then we can use CHAR.
+🔤 1. String Data Types
+Used to store text, characters, or binary data.
 
--->VARCHAR
-    .It is used to store different length of characters.
-    .It can store alphabets, numbers, digits and special symbols.
-    .Size is 0 65535
-    .No default size, we must specify the size.
-    .VARCHAR dynamic in nature.
-    .For each CHAR, VARCHAR datatype will take 1 byte of memory along with some extra    space(to store length information)
-    .If we are not sure about length of the string we can use VARCHAR.
+Note: MySQL doesn't have a data type called "STRING"; instead, it provides specific types for different use cases.
 
--->TEXT
-    .It is used to hold maximum 65,535 char.
+✅ Common String Data Types:
+Data Type	      Description
+CHAR	          Fixed-length character string
+VARCHAR	          Variable-length character string
+TEXT	          Large text values
+BINARY	          Fixed-length binary string
+BLOB	          Binary Large Object (used for images, audio, etc.)
+ENUM	          One value from a predefined list
+SET	              One or more values from a predefined list
 
--->BINARY
-    .It is used to store binary type of string values like image.
-    .It is similar like Char data type.
+🔹 CHAR
+. Stores fixed-length character strings.
+. Can store alphabets, numbers, and symbols.
+. Size range: 0 to 255 characters.
+. Default size: 1
+. Takes 1 byte per character.
+. Suitable when you know the exact length of the string.
 
--->BLOB
-    .It is used to hold maximum 65,535 bytes.
+🔹 VARCHAR
+. Stores variable-length character strings.
+. Must define size (required).
+. Size range: 0 to 65,535 (actual max depends on row size and character set).
+. Takes 1 byte per character plus extra space for length information.
+. Good for dynamic-length strings.
 
--->ENUM
-    .Choose any one option from group of options.
+🔹 TEXT
+Used for long text values, up to 65,535 characters.
 
--->SET
-    .Choose multiple options from group of options.
+🔹 BINARY
+. Similar to CHAR but stores binary data (e.g., images).
 
-******************************************************************************************
+🔹 BLOB
+. Used for binary large objects, up to 65,535 bytes.
 
-2. Numeric Datatype
-Numeric datatype is used to store numeric value.
-Numeric value can be of int type or float type.
+🔹 ENUM
+. Stores one value from a predefined list.
+    Example: ENUM('Male', 'Female')
 
-In every datatype has signed and unsigned. In signed we can store +ve and -ve values. In unsigned we can only store +ve values. Bydefault is signed.
+🔹 SET
+. Stores multiple values from a predefined list.
+    Example: SET('Reading', 'Music', 'Travel')
 
--->TINYINT (Signed -128 to 127) (unsigned 0 to 255)
--->SMALLINT (signed -32768 to 32767) (unsigned 0 to 65535)
--->INT/INTEGER (signed -8388608 to 8388607) (unsigned 0 to 16777215)
--->INT (signed -2142482648 to 2142482647) (unsigned 0 to 4294967295)
--->BIGINT
--->FLOAT
--->DOUBLE
 
-FLOAT and DOUBLE Syntax:
-    FLOAT(Precision,scale)/DOUBLE(Precision,scale)
-    Precision represents total number of digits in the value.
-    Scale represents the max number of digits after the decimal point.
-    Ex:
-        salary float(7,2)
+🔢 2. Numeric Data Types
+Used to store numbers — both integers and floating-point values.
 
--->BIT
-    It is used to bit field values.
-    To define bit value we must use b notation.
-    Bit value can be written in binary only(0's and 1's).
+Every numeric type can be SIGNED (positive and negative) or UNSIGNED (only positive).
+Default: SIGNED.
+✅ Common Integer Types:
+| Data Type         | Signed Range             | Unsigned Range |
+| **TINYINT**       | -128 to 127              | 0 to 255       |
+| **SMALLINT**      | -32,768 to 32,767        | 0 to 65,535    |
+| **MEDIUMINT**     | -8,388,608 to 8,388,607  | 0 to 16,777,215|
+| **INT / INTEGER** |-2147483648 to 2147483647 | 0 to 4294967295|
+| **BIGINT**        | Very large integer values|                |
 
-Ex:
-    b'1111' represents as 15
-    b'11101' represents as 29
 
-******************************************************************************************
+✅ Floating-Point Types:
+. FLOAT(precision, scale)
+. DOUBLE(precision, scale)
+Precision = total number of digits
+Scale = digits after the decimal point
+Example:
+    salary FLOAT(7, 2); -- allows values like 12345.67
 
-3. Date and Time
-Datetime datatype is used to store date and time in various format.
--->DATE
-    DATE datatype is used to store date in yyyy-mm-dd format.
-    DATE can store data in the range of '1000-01-001' to '9999-12-31'.
--->TIME
-    TIME datatype is used to store time in HH-MM-SS format.
-    TIME can store date in the range of '-838:59:59' to '838:59:59'.
--->DATETIME
-    DATETIME datatype is used to store both date and time in YYYY-MM-DD HH:MM:SS format.
-    DATETIME can store date and time in the range of '1000-01-01 00:00:00' to '9999-12-31 23:59:59'.
--->TIMESTAMP
-    TIMESTAMP datatype is used to store both date and time in YYYY-MM-DD HH:MM:SS format.
-    TIMESTAMP can store date and time in the range of '1970-01-01 00:00:01' UTC to '2038-01-09 03:14:07' UTC.
--->YEAR
-    YEAR datatype is used to store only year in YYYY format.
+🔹 BIT
+. Stores bit field values (binary).
+. Must use b'' notation.
+Example:
+    b'1111' = 15  
+    b'11101' = 29
 
+🕒 3. Date and Time Data Types
+Used to store dates, times, and timestamps.
+| Data Type     | Format               | Range
+| **DATE**      | `YYYY-MM-DD`         | `'1000-01-01'` to `'9999-12-31'`
+
+| **TIME**      | `HH:MM:SS`           | `'-838:59:59'` to `'838:59:59'`
+
+| **DATETIME**  | `YYYY-MM-DD HH:MM:SS`| `'1000-01-01 00:00:00'` to  `'9999-12-31 23:59:59'`
+
+| **TIMESTAMP** | `YYYY-MM-DD HH:MM:SS`| `'1970-01-01 00:00:01' UTC to '2038-01-19 03:14:07' UTC` |
+
+| **YEAR**      | `YYYY`               | 1901 to 2155 |
 
 

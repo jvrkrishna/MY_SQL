@@ -1,11 +1,18 @@
-DDL stands for Data Definition Language.
-DDL is a subset or sub language of SQL.
-The main purpose of DDL is to create, change, delete any database objects.
-It is used to create database objects like database, table, views, procedure, function, trigger, etc.
+1. Introduction to DDL (Data Definition Language)
+    DDL stands for Data Definition Language.
+    It is a subset of SQL (Structured Query Language).
+    The main purpose of DDL is to create, modify, and delete database objects.
+    DDL is used to define and manage the structure of database objects such as:
+    . Databases
+    . Tables
+    . Views
+    . Procedures
+    . Functions
+    . Triggers, etc.
 
-.CREATE
-.ALTER
-.DROP
-.TRUNCATE
-.RENAME
-
+📌 Common DDL Commands:
+. CREATE – To create a new database object (e.g., table, view)
+. ALTER – To modify an existing database object
+. DROP – To permanently delete a database object
+. TRUNCATE – To remove all data from a table, but keep its structure
+. RENAME – To rename a database object (supported in some DBMSs)

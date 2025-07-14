@@ -1,41 +1,47 @@
-CREATE command is used to create database, table, views, procedure, function, trigger etc.
+🔧 CREATE Command in SQL
+The CREATE command is used to create database objects such as:
 
-#Create a database
+. Databases
+. Tables
+. Views
+. Procedures
+. Functions
+. Triggers
+
+📌 Creating a Database
+-- Create a database
 CREATE DATABASE COLLEGE;
 
-#To show all tha databases
+-- Show all databases
 SHOW DATABASES;
 
-#To delete database
+-- Delete (drop) a database
 DROP DATABASE COLLEGE;
 
-SHOW Databases;
+-- Show databases again
+SHOW DATABASES;
 
-******************************************************************************************
+📘 What is a Table?
+. A table is a collection of rows and columns.
+. A table is also called a relation in relational databases.
+. A column is also known as a field or attribute.
+. A row is also known as a tuple or record.
+. The complete table structure + data is known as an instance.
 
-What is Table?
-Table is collection of rows and columns.
-Relation means table.
-Column also called as filed/attributes
-Rows also called as Tuples/Record
-Complete table+data is known as instance.
-
-How to crete a table?
+🏗️ How to Create a Table
 Syntax:
-CREATE table table_name(
-    col_name1 datatype(size),
-    col_name2 datatype(size),
-    col_name3 datatype(size),
-    .
-    .
-    col_name_n datatype(size)
+CREATE TABLE table_name (
+    column1 datatype(size),
+    column2 datatype(size),
+    ...,
+    columnN datatype(size)
 );
 
-Example:
-WAQ to create a table named with 'stud_info' with 5 column like roll, name, course, mark, and gender.
+🧠 Example Question:
+Q: Write a query to create a table named stud_info with 5 columns: roll, name, course, mark, and gender.
 
-CREATE TABLE stud_info
-(
+Answer:
+CREATE TABLE stud_info (
     Roll INT,
     Name VARCHAR(30),
     Course VARCHAR(20),
@@ -43,12 +49,15 @@ CREATE TABLE stud_info
     Gender CHAR
 );
 
-Practical:
+🧪 Practical Example
+-- Create the database
 CREATE DATABASE COLLEGE;
+
+-- Select the database for use
 USE COLLEGE;
 
-CREATE TABLE stud_info
-(
+-- Create the table
+CREATE TABLE stud_info (
     Roll INT,
     Name VARCHAR(30),
     Course VARCHAR(20),
@@ -56,5 +65,11 @@ CREATE TABLE stud_info
     Gender CHAR
 );
 
+-- Show all databases
 SHOW DATABASES;
+
+-- View the contents of the table
 SELECT * FROM stud_info;
+
+
+
