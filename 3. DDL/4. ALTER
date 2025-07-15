@@ -244,10 +244,6 @@ INSERT INTO employee(ID, NAME, MOBILE, ADDRESS)
 VALUES (1, 'Raj', 9876543211, 'Kakinada');
 -- Error: Duplicate entry '1' for key 'ID'
 
--- ❌ Invalid insert: duplicate MOBILE
-INSERT INTO employee(ID, NAME, MOBILE, ADDRESS) 
-VALUES (2, 'Ravi', 9876543210, 'Hyderabad');
--- Error: Duplicate entry '9876543210' for key 'MOBILE'
 
 ➕ To Add UNIQUE Later Using ALTER TABLE:
 ✅ Step 1: Make sure there are no duplicates
