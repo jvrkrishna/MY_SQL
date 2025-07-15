@@ -1,5 +1,7 @@
-The ALTER command is used to change the structure of an existing table.
-Generally, we can use the ALTER command for:
+🧱 ALTER Command in MySQL
+Used to change the structure of an existing table.
+
+✅ Common Uses:
     .Adding a new column.(Alter with add)
     .Delete an existing column.(Alter with drop)
     .Change column datatype.(Alter with modify)
@@ -20,18 +22,23 @@ Generally, we can use the ALTER command for:
 
     Adding Multiple Columns:
     Syntax:
-        ALTER TABLE <tablename> ADD(<col1_name> datatype(size)),(<col2_name>datatype(size));
+        ALTER TABLE table_name 
+        ADD (column1_name datatype(size), column2_name datatype(size));
+
+    Example:
+        ALTER TABLE stud_info 
+        ADD (Marks INT, Gender CHAR(1));
 
 Practical:
 CREATE DATABASE COLLEGE;
 USE COLLEGE;
 
-CREATE TABLE stud_info
-(
+CREATE TABLE stud_info (
     Roll INT,
     Name VARCHAR(30),
     Course VARCHAR(20)
 );
+
 
 SHOW DATABASES;
 SELECT * FROM stud_info;
@@ -51,7 +58,7 @@ DESC stud_info;
     .We will use ALTER with DROP command to delete an existing column.
 
     Syntax:
-        Alter table<table_name> DROP <column_name>;
+        Alter table <table_name> DROP <column_name>;
     
     Delete Multiple Columns:
         Alter table<table_name> 
@@ -60,14 +67,25 @@ DESC stud_info;
         DROP <column3_name>;
 
 Practical
-#Delete column from a table
-AlTER table stud_info DROP Address;
-DESC stud_info;
+#Create table
+CREATE TABLE stud_info1 (
+    Roll INT,
+    Name VARCHAR(30),
+    Course VARCHAR(20),
+    Address VARCHAR(50),
+    Marks INT,
+    Gender CHAR(1)
+);
+
+#Delete Single Column
+ALTER TABLE stud_info DROP Address;
+
+DESC stud_info1;
 
 #Delete multi columns from a table
-AlTER table stud_info 
-    DROP Marks,
-    DROP Gender;
+ALTER TABLE stud_info 
+DROP Marks,
+DROP Gender;
 
 DESC stud_info;
 
@@ -116,7 +134,7 @@ ALTER TABLE stud_info  RENAME COLUMN Marks to Mark;
 DESC stud_info;
 
 ******************************************************************************************
-SQL Constraints
+✅ SQL Constraints
     We use SQL constraints to specify the rules for the data in a table.
     Constraints are used to limit which type of data must be stores in the database.
     SQL constraints increase the accuracy and reliability of the data stored in the database.
@@ -135,6 +153,7 @@ Constraints in SQL are:
 
 ==========================================================================================
 ==>NOT NULL
+    Ensures a column cannot have a NULL value.
     The NOT NULL constraint makes sure that a column cannot have a NULL value.
     We can use the NOT NULL constraint either creating the table in the database or while modifying it.
     We can have more than one NOT NULL columns in a table.
@@ -154,6 +173,47 @@ Practical:
     INSERT INTO employee(ID,NAME,ADDRESS) values(1,'Ram','Kakinada');
     INSERT INTO employee(ID,NAME,ADDRESS) values(NULL,'Ram','Kakinada'); ---Raises error id cannot be null.
 
+➕ Add NOT NULL to Existing Table:
+If the table already exists, you can add the NOT NULL constraint using:
+
+    ALTER TABLE employee 
+    MODIFY NAME VARCHAR(10) NOT NULL;
+
+🔐 Note: You can only add NOT NULL to a column if all existing values in that column are non-null.
+Because the NOT NULL rule says:
+    “This column must always have a value.”
+
+So if the table already has some rows where the column is NULL, then allowing the NOT NULL constraint would violate that rule for existing data.
+
+Suppose you have this table:
+    CREATE TABLE student (
+        id INT,
+        name VARCHAR(20)
+    );
+
+    INSERT INTO student VALUES (1, 'Alice');
+    INSERT INTO student VALUES (2, NULL); -- NULL value
+
+Now, if you try to make the name column NOT NULL:
+    ALTER TABLE student 
+    MODIFY name VARCHAR(20) NOT NULL;
+
+👉 You will get an error, because row 2 has a NULL in the name column.
+
+✅ How to Fix It:
+1. Check for NULLs:
+    SELECT * FROM student WHERE name IS NULL;
+
+2. Update NULLs:
+Replace them with some default value if appropriate:
+
+    UPDATE student SET name = 'Unknown' WHERE name IS NULL;
+
+3. Then Add the Constraint:
+    ALTER TABLE student 
+    MODIFY name VARCHAR(20) NOT NULL;
+
+
 ==========================================================================================
 UNIQUE:
     The UNIQUE constraint makes sure that all values in a column must be unique.
@@ -164,27 +224,54 @@ UNIQUE:
 How to add UNIQUE constraint to column/columns?
     -->UNIQUE constraint on CREATE TABLE
 
-Practical
-CREATE TABLE employee(
-    ID int(6) unique,
-    NAME varchat(10) NOT NULL,
-    ADDRESS varchar(20)
-);
+➤ Practical:
+CREATE TABLE:
+    CREATE TABLE employee (
+        ID INT(6) UNIQUE,
+        NAME VARCHAR(10) NOT NULL,
+        MOBILE INT(10),
+        ADDRESS VARCHAR(20)
+    );
+
 
 DESC employee;
-INSERT INTO employee(ID,NAME,ADDRESS) VALUES(1,'Raj',"Kakinada');
+-- ✅ Valid insert
+INSERT INTO employee(ID, NAME, MOBILE, ADDRESS) 
+VALUES (1, 'Raj', 9876543210, 'Kakinada');
 
-Again we run above command it gives error Duplicate entry '1' for key 'ID'
-INSERT INTO employee(ID,NAME,ADDRESS) VALUES(1,'Raj',"Kakinada');
+-- ❌ Invalid insert: duplicate ID
+INSERT INTO employee(ID, NAME, MOBILE, ADDRESS) 
+VALUES (1, 'Raj', 9876543211, 'Kakinada');
+-- Error: Duplicate entry '1' for key 'ID'
 
-How to add UNIQUE constraint to column/columns?
-UNIQUE constraint on CREATE TABLE
-CREATE TABLE employee(
-    ID int(6) UNIQUE,
-    NAME varchar(10) NOT NULL,
-    MOBILE int(11) Unique,
-    ADDRESS varchar(20)
-);
+-- ❌ Invalid insert: duplicate MOBILE
+INSERT INTO employee(ID, NAME, MOBILE, ADDRESS) 
+VALUES (2, 'Ravi', 9876543210, 'Hyderabad');
+-- Error: Duplicate entry '9876543210' for key 'MOBILE'
+
+➕ To Add UNIQUE Later Using ALTER TABLE:
+✅ Step 1: Make sure there are no duplicates
+Check for duplicates before applying the constraint:
+    SELECT MOBILE, COUNT(*) 
+    FROM employee 
+    GROUP BY MOBILE 
+    HAVING COUNT(*) > 1;
+
+If this returns no rows, it means all mobile numbers are currently unique, and you can safely proceed.
+
+✅ Step 2: Add the UNIQUE constraint
+ALTER TABLE employee 
+ADD CONSTRAINT unique_mobile UNIQUE (MOBILE);
+
+🧪 Test Insert After Adding UNIQUE:
+-- ✅ This works
+INSERT INTO employee (ID, NAME, MOBILE, ADDRESS)
+VALUES (1, 'Raj', 9876543210, 'Kakinada');
+
+-- ❌ This fails: duplicate mobile
+INSERT INTO employee (ID, NAME, MOBILE, ADDRESS)
+VALUES (2, 'Ravi', 9876543210, 'Hyderabad');
+-- Error: Duplicate entry '9876543210' for key 'unique_mobile'
 
 ==========================================================================================
 PRIMARY KEY
