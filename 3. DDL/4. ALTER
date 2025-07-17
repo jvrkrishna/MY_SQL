@@ -271,59 +271,102 @@ VALUES (2, 'Ravi', 9876543210, 'Hyderabad');
 
 ==========================================================================================
 PRIMARY KEY
-    A Primary key is a field which can uniquely identify each row in a table.
-    Primary keys must contain UNIQUE values, and cannot contain NULL values.
-    A Table can have only ONE primary key and this primary key can consist of single or multiple columns.
-    We can use this constraint on the CREATE and ALTER table command.
+    . A Primary Key is a column (or set of columns) that uniquely identifies each row in a table.
+    . It cannot contain NULLs and must be unique.
+    . Every table can have only one primary key, but that key can include multiple columns (called a composite key).
+    . We can use this constraint on the CREATE and ALTER table command.
 
     NOT NULL+UNIQUE=PRIMARY KEY
+
+🛠️ Syntax to create a PRIMARY KEY:
+✅ Option 1: Defining Primary Key Inline (in column definition)
+CREATE TABLE employee (
+    ID INT PRIMARY KEY,
+    NAME VARCHAR(50),
+    ADDRESS VARCHAR(100)
+);
+
+✅ Option 2: Defining Primary Key Separately
+CREATE TABLE employee (
+    ID INT,
+    NAME VARCHAR(50),
+    ADDRESS VARCHAR(100),
+    PRIMARY KEY (ID)
+);
+
+🔄 Composite Primary Key (using multiple columns):
+CREATE TABLE employee (
+    ID INT,
+    NAME VARCHAR(50),
+    ADDRESS VARCHAR(100),
+    PRIMARY KEY (ID, NAME)  -- This means both ID and NAME together must be unique
+);
+
+🔄 add a PRIMARY KEY to an existing table using the ALTER TABLE
+✅ Basic Syntax
+ALTER TABLE table_name ADD PRIMARY KEY (column_name);
+
+🧪 Example 1: Add Primary Key to One Column
+Let’s say we already have a table called employee like this:
+CREATE TABLE employee (
+    ID INT,
+    NAME VARCHAR(50),
+    ADDRESS VARCHAR(100)
+);
+
+Now we want to make the ID column a primary key:
+ALTER TABLE employee ADD PRIMARY KEY (ID);
+✅ Now, ID must be unique and not null.
+
+🧪 Example 2: Add Composite Primary Key (Multiple Columns)
+ALTER TABLE employee ADD PRIMARY KEY (ID, NAME);
+✅ Now, the combination of ID and NAME must be unique.
+
+⚠️ Important Notes:
+    . Before adding a primary key, make sure the column(s) do not contain duplicate or NULL values.
+    . A table can have only one PRIMARY KEY.
+    . If a primary key already exists, you must drop it first before adding a new one.
+
+❌ How to Drop Existing Primary Key
+ALTER TABLE employee DROP PRIMARY KEY;
 
 #How to add PRIMARY KEY constraint on a Table?
 Primary key constraint on Create table
 
 Practical
-CREATE TABLE employee(
-    ID int(6),
-    NAME varchar(10) NOT NULL,
-    ADDRESS varchar(20),
-    PRIMARY KEY(ID)  #PRIMARY KEY(ID,NAME) ---for combination of multiple columns
+CREATE TABLE student (
+    roll_no INT PRIMARY KEY,
+    name VARCHAR(50),
+    course VARCHAR(30)
 );
 
-#We can write like this also
-CREATE TABLE employee(
-    ID int(6) PRIMARY KEY,
-    NAME varchar(10) NOT NULL PRIMARY KEY,
-    ADDRESS varchar(20)
-);
+📝 Explanation:
+. roll_no is the primary key.
+. It means each student must have a unique roll number.
+. You cannot insert a student with:
+    > A duplicate roll number
+    > A NULL roll number
 
-DESC employee;
+✅ Inserting Valid Data
+INSERT INTO student (roll_no, name, course)
+VALUES (1, 'Ravi', 'B.Tech');
 
-#Below code also done same job what the above code done.(i.e., NOT NULL+UNIQUE=PRIMARY KEY)
-CREATE TABLE employee(
-    ID int(6) NOT NULL UNIQUE,
-    NAME varchar(10) NOT NULL,
-    ADDRESS varchar(20)
-);
+INSERT INTO student (roll_no, name, course)
+VALUES (2, 'Anjali', 'MBA');
 
-DESC employee;
+❌ Inserting Invalid Data (Duplicate roll_no)
+INSERT INTO student (roll_no, name, course) VALUES (1, 'Kiran', 'B.Sc');
 
-#Add some data to check PRIMARY KEY Constraint
-INSERT INTO employee(ID,NAME,ADDRESS) VALUES(1,'Ram','Kakinada')
-
-#Repeate once Again ---- raises error Duplicate entry
-INSERT INTO employee(ID,NAME,ADDRESS) VALUES(1,'Ram','Kakinada')
-
-#Repeat once again with ID NULL ------ raises error ID cannot be null
-INSERT INTO employee(ID,NAME,ADDRESS) VALUES(NULL,'Ram','Kakinada')
+❌ Inserting NULL into PRIMARY KEY
+INSERT INTO student (roll_no, name, course) VALUES (NULL, 'Vikram', 'B.Com');
 
 ==========================================================================================
-FOREIGN KEY
-A foreign key is a field(or collection of fields) points to the PRIMARY KEY of another table.
-Table with the foreign key is called the child table and the table with the primary key is called the referenced or parent table.
-The foreign key constraint is used to prevent actions that would destroy links between tables.
-We can use this constraint on the CREATE and ALTER table command.
+🔍 What is a FOREIGN KEY?
+    . A FOREIGN KEY is a column (or set of columns) in one table that refers to the PRIMARY KEY in another table.
+    . It ensures referential integrity, meaning the data in one table must match data in another.
+    . It prevents invalid data from being entered in the child table.
+    . We can use this constraint on the CREATE and ALTER table command.
 
-Check the primary key and foreign key relation in online.
 
 Practical
 *********** DEPARTMENT TABLE **************
@@ -361,33 +404,64 @@ INSERT INTO employee(ID,NAME,ADDRESS,DEPT_ID) VALUES(2,"Raju","KAKINADA",9) ----
 select * from department;
 
 ==========================================================================================
-CHECK
-The CHECK constraint makes sure that all values in a column satisfy a specific condition.
-We can use this constraint on the CREATE and ALTER table command.
+✅CHECK Constraint?
+    . The CHECK constraint ensures that the values in a column must meet a specific condition.
+    . It can be used while creating or modifying a table.
+    . If the condition is not satisfied, the insert or update will fail.
 
-How to add CHECK constraint on a column?
-CHECK constraintn on CREATE TABLE
+🔨 Syntax:
+    CREATE TABLE table_name (
+    column_name data_type CHECK (condition)
+    );
 
-Practical
-CREATE TABLE employee(
-    ID int(6),
-    NAME varchar(10) CHECK(NAME !='Ram'),
-    ADDRESS varchar(20)
+🧪 Example 1: Restrict a Specific Name
+    CREATE TABLE employee (
+    ID INT(6),
+    NAME VARCHAR(10) CHECK(NAME != 'Ram'),
+    ADDRESS VARCHAR(20)
+    );
+
+✅ Valid Insert:
+INSERT INTO employee(ID, NAME, ADDRESS) VALUES (1, 'Raj', 'KAKINADA');
+
+❌ Invalid Insert (fails because NAME is 'Ram'):
+INSERT INTO employee(ID, NAME, ADDRESS) VALUES (2, 'Ram', 'KAKINADA');
+
+🧪 Example 2: Restrict Age Greater Than 18
+    CREATE TABLE employee (
+        ID INT(6),
+        NAME VARCHAR(10),
+        AGE INT CHECK(AGE > 18),
+        ADDRESS VARCHAR(20)
+    );
+✅ Valid Insert:
+    INSERT INTO employee(ID, NAME, AGE, ADDRESS) VALUES (1, 'Ravi', 25, 'Delhi');
+
+❌ Invalid Insert (fails because AGE is 15):
+INSERT INTO employee(ID, NAME, AGE, ADDRESS) VALUES (2, 'Anu', 15, 'Mumbai');
+
+✅ Syntax to Add CHECK Constraint Using ALTER TABLE:
+ALTER TABLE table_name ADD CONSTRAINT constraint_name CHECK (condition);
+
+
+🧪 Example 1: Add a CHECK Constraint for Age > 18
+Suppose you already have a table named employee:
+CREATE TABLE employee (
+    ID INT,
+    NAME VARCHAR(20),
+    AGE INT,
+    ADDRESS VARCHAR(50)
 );
 
-#The above code meaning is if we try to insert record where the value of name column is equal to 'Ram' gives an error.
+Now, to ensure that AGE must be greater than 18, you can do:
+ALTER TABLE employee
+ADD CONSTRAINT chk_age CHECK (AGE > 18);
 
-INSERT INTO employee(ID,NAME,ADDRESS) VALUES(1,'Raj',"KAKINADA");
-select * form employee
-INSERT INTO employee(ID,NAME,ADDRESS) VALUES(2,'Ram',"KAKINADA"); ---It gives an error
+🔍 View Constraints
+You can view the constraints on a table (in MySQL) by using:
+SHOW CREATE TABLE employee;
 
-#Another Example to Restrict the AGE should be greater than 18
-CREATE TABLE employee(
-    ID int(6),
-    NAME varchar(10),
-    AGE varchar(10) CHECK(AGE>18),
-    ADDRESS varchar(20)
-);
+This shows all the constraints, including CHECK, PRIMARY KEY, UNIQUE, etc.
 
 ==========================================================================================
 DEFAULT
