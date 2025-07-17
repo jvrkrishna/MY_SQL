@@ -454,8 +454,7 @@ CREATE TABLE employee (
 );
 
 Now, to ensure that AGE must be greater than 18, you can do:
-ALTER TABLE employee
-ADD CONSTRAINT chk_age CHECK (AGE > 18);
+ALTER TABLE employee ADD CONSTRAINT chk_age CHECK (AGE > 18);
 
 🔍 View Constraints
 You can view the constraints on a table (in MySQL) by using:
