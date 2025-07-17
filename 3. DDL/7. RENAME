@@ -11,10 +11,26 @@ Syntax:
                  <old_Table_Name> to <New_Table_Name>,
                  <old_Table_Name> to <New_Table_Name>;
 
-Rename a table using Alter with Rename command
+✅ 1. Rename a Table Using ALTER with RENAME
+Syntax:
+ALTER TABLE old_table_name RENAME TO new_table_name;
 
-Rename column names
+Example:
+ALTER TABLE employee RENAME TO staff;
+This renames the table employee to staff.
 
-Rename multi column names at a time
+✅ 2. Rename a Column Using ALTER with RENAME COLUMN
+Syntax:
+ALTER TABLE table_name RENAME COLUMN old_column_name TO new_column_name;
 
-Rename a column using Alter with rename command
+Example:
+ALTER TABLE employee RENAME COLUMN NAME TO full_name;
+This changes the column NAME to full_name in the employee table.
+
+✅ 3. Rename Multiple Columns (MySQL 8.0+ and some other databases)
+Some databases (like PostgreSQL) do not support renaming multiple columns in a single command. MySQL 8.0 also does not support renaming multiple columns at once directly.
+
+So you must rename columns one by one:
+ALTER TABLE employee RENAME COLUMN NAME TO full_name;
+
+ALTER TABLE employee RENAME COLUMN ADDRESS TO location;
