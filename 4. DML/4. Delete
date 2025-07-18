@@ -63,6 +63,7 @@ If you omit the WHERE clause, all rows in the table will be deleted:
 
 
 🔍 DELETE     vs      TRUNCATE
+
 Feature	               DELETE	                         TRUNCATE
 Uses WHERE clause?	   ✅ Yes	                        ❌ No
 Rollback possible?	   ✅ Yes (if inside a transaction)	❌ No    

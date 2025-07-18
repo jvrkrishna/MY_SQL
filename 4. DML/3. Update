@@ -48,8 +48,7 @@ Example:
 ❓ Queries
 🔸 Q1: Add 3300 to all employee salaries
     SET SQL_SAFE_UPDATES = 0; -- (Optional: disables safe update mode)
-    UPDATE EMP_INFO
-    SET SALARY = SALARY + 3300;
+    UPDATE EMP_INFO SET SALARY = SALARY + 3300;
 
     SELECT * FROM EMP_INFO;
 

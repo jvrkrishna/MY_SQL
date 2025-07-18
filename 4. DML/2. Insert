@@ -15,6 +15,7 @@ If you're inserting into all columns and in the same order as in the table, you 
 INSERT INTO employee VALUES (2, 'Raj', 'Kakinada');
 
 SELECT * FROM employee;
+
 ✅ Insert Multiple Rows at Once:
 You can insert multiple records in a single INSERT statement:
 
