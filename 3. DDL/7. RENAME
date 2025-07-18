@@ -34,3 +34,10 @@ So you must rename columns one by one:
 ALTER TABLE employee RENAME COLUMN NAME TO full_name;
 
 ALTER TABLE employee RENAME COLUMN ADDRESS TO location;
+
+
+✅ 4. We can rename multiple tables at once in MySQL, using a single RENAME TABLE statement.
+
+RENAME TABLE old_table1 TO new_table1,
+             old_table2 TO new_table2,
+             old_table3 TO new_table3;

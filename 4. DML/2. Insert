@@ -1,26 +1,33 @@
-INSERT
-    INSERT command is used to add data into the table.
-    We can insert data using various approach.
+📝 INSERT Statement in MySQL
+The INSERT command is used to add new records into a table.
 
-    SYNTAX:
-        INSERT INTO <table_name> (col_1,col_2,col_3) VALUES(val_1,val_2,val_3);
+✅ Basic Syntax:
+INSERT INTO <table_name> (col_1, col_2, col_3) VALUES (val_1, val_2);
 
-        INSERT INTO employee(ID,NAME,ADDRESS) VALUES(1,'Ram','Kakinada');
-        select * from employee;
+📌 Example:
+INSERT INTO employee (ID, NAME, ADDRESS) VALUES (1, 'Ram', 'Kakinada');
 
-    Another way:
-        INSERT INTO employee VALUES(1,"Raj","KAKINADA");
-        select * from employee;
-    
-    Insert multiple record at a time:
-        INSERT INTO <table_name> (col_1,col_2,col_3) VALUES
-            (val_1,val_2,val_3)
-            (val_1,val_2,val_3)
-            (val_1,val_2,val_3)
+SELECT * FROM employee;
 
-        INSERT INTO employee(ID,NAME,ADDRESS) VALUES
-        (1,'Ram','Kakinada'),
-        (2,'Raj','Kakinada'),
-        (3,'Ravi','Kakinada');
-    
-        select * from employee;
+✅ Shortcut Syntax (All Columns in Order):
+If you're inserting into all columns and in the same order as in the table, you can omit the column list:
+
+INSERT INTO employee VALUES (2, 'Raj', 'Kakinada');
+
+SELECT * FROM employee;
+✅ Insert Multiple Rows at Once:
+You can insert multiple records in a single INSERT statement:
+
+INSERT INTO employee (ID, NAME, ADDRESS)
+VALUES (3, 'Ravi', 'Kakinada'),
+       (4, 'Rani', 'Hyderabad'),
+       (5, 'Raju', 'Vizag');
+
+SELECT * FROM employee;
+
+⚠️ Notes:
+    . Make sure the values match the column data types.
+
+    . Ensure that primary key values (like ID) are unique unless you're using AUTO_INCREMENT.
+
+    . Always use single quotes (') for string values, not double quotes ("), as per SQL standard (though MySQL is lenient with " " if ANSI_QUOTES is disabled).
