@@ -1,5 +1,7 @@
 In MySQL, locks are used to control concurrent access to database objects like tables and rows, preventing conflicts and ensuring data consistency. The LOCK TABLES statement allows explicit table-level locking, while InnoDB storage engine uses row-level locking. MySQL also uses metadata locks to manage concurrent changes to database structures. 
 
+Note : To view the connection id----->SELECT CONNECTION_ID();
+
 🔐 Types of Locks in MySQL
 1. 🧱 Table-Level Locks
     Applies to: MyISAM, MEMORY, MERGE engines.
@@ -113,12 +115,13 @@ START TRANSACTION;
 
 SELECT * FROM emp_info WHERE id = 1 FOR UPDATE;
 
--- Now this row is locked exclusively for current session
--- No other session can read or update this row until COMMIT
+-- Now this row is locked exclusively for current session.
+-- No other session can update this row until COMMIT (they can read).
 
 UPDATE emp_info SET salary = salary + 5000 WHERE id = 1;
 
 COMMIT;
+
 ✅ Step 7: Lock a Row for Shared Read
 START TRANSACTION;
 
