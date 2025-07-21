@@ -7,6 +7,6 @@ List of DML command:
     UPDATE
     DELETE
     MERGE
-    CALL
+    CALL ------ These notes in 11. Stored Procedures
     EXPLAIN PLAN
     LOCK TABLE
