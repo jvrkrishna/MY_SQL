@@ -24,6 +24,12 @@ Output:
     +----+------------+-----------+--------+
 
 🔁 Step 3: MERGE Using INSERT ... ON DUPLICATE KEY UPDATE
+ON DUPLICATE KEY UPDATE is a clause used with the INSERT statement in MySQL to handle duplicate key conflicts.
+
+✅ What It Does:
+If you try to INSERT a row with a primary key or unique key that already exists:
+MySQL will update the specified columns instead of throwing an error.
+
 Case 1: Insert New Record (ID = 3, doesn't exist)
     INSERT INTO EMP_INFO_MERGE (ID, FIRST_NAME, LAST_NAME, SALARY)
     VALUES (3, 'Raj', 'Verma', 28000)
@@ -44,23 +50,56 @@ This deletes the old row (if it exists) and inserts a new one.
 ⚠️ If there are foreign key constraints or AUTO_INCREMENT, this is risky — use with caution.
 
 🧪 Step 5: Use CONCAT to Combine Names
-Basic:
-    SELECT FIRST_NAME, LAST_NAME, CONCAT(FIRST_NAME, ' ', LAST_NAME) AS FULLNAME
-    FROM EMP_INFO_MERGE;
+    CREATE TABLE EMP_INFO_MERGE (
+        ID INT PRIMARY KEY,
+        FIRST_NAME VARCHAR(50),
+        LAST_NAME VARCHAR(50),
+        SALARY FLOAT
+    );
 
-With NULL-Safe Version:
-    SELECT FIRST_NAME, LAST_NAME, CONCAT_WS(' ', FIRST_NAME, LAST_NAME) AS FULLNAME
-    FROM EMP_INFO_MERGE;
+    INSERT INTO EMP_INFO_MERGE (ID, FIRST_NAME, LAST_NAME, SALARY) VALUES
+    (1, 'Ram', 'Kumar', 25000),
+    (2, 'Ravi', 'Sharma', 30000),
+    (3, 'Raj', NULL, 28000),
+    (4, NULL, 'Verma', 31000),
+    (5, NULL, NULL, 22000);
 
-CONCAT_WS is preferred if any of the name fields might be NULL.
-
-✅ Final Query to See Everything:
     SELECT * FROM EMP_INFO_MERGE;
 
+    | ID | FIRST_NAME | LAST_NAME | SALARY |
+    |----|------------|-----------|--------|
+    | 1  | Ram        | Kumar     | 25000  |
+    | 2  | Ravi       | Sharma    | 30000  |
+    | 3  | Raj        | NULL      | 28000  |
+    | 4  | NULL       | Verma     | 31000  |
+    | 5  | NULL       | NULL      | 22000  |
+
+    -->Combine Names Using CONCAT (not NULL-safe)
     SELECT 
     FIRST_NAME,
     LAST_NAME,
-    CONCAT(FIRST_NAME, ' ', LAST_NAME) AS CONCAT_FULLNAME,
-    CONCAT_WS(' ', FIRST_NAME, LAST_NAME) AS WS_FULLNAME
-    
+    CONCAT(FIRST_NAME, ' ', LAST_NAME) AS CONCAT_FULLNAME
     FROM EMP_INFO_MERGE;
+
+    | FIRST_NAME | LAST_NAME | CONCAT_FULLNAME |
+    |------------|-----------|-----------------|
+    | Ram        | Kumar     | Ram Kumar       |
+    | Ravi       | Sharma    | Ravi Sharma     |
+    | Raj        | NULL      | NULL            |
+    | NULL       | Verma     | NULL            |
+    | NULL       | NULL      | NULL            |
+
+    -->Combine Names Using CONCAT_WS (NULL-safe)
+    SELECT 
+    FIRST_NAME,
+    LAST_NAME,
+    CONCAT_WS(' ', FIRST_NAME, LAST_NAME) AS WS_FULLNAME
+    FROM EMP_INFO_MERGE;
+
+    | FIRST_NAME | LAST_NAME | WS_FULLNAME  |
+    |------------|-----------|--------------|
+    | Ram        | Kumar     | Ram Kumar    |
+    | Ravi       | Sharma    | Ravi Sharma  |
+    | Raj        | NULL      | Raj          |
+    | NULL       | Verma     | Verma        |
+    | NULL       | NULL      |              |

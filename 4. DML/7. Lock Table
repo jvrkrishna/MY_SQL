@@ -90,10 +90,10 @@ INSERT INTO emp_info (id, name, address, salary) VALUES
 🔒 Part 1: Table-Level Locks (Using LOCK TABLES)
 
 ✅ Step 3: Lock Table in READ Mode
-LOCK TABLE emp_info READ;
+    LOCK TABLE emp_info READ;
 
-Only SELECT queries allowed in current session.
-Other sessions cannot write to this table.
+. Locks the emp_info table for reading.
+. Other sessions can also read the table, but no session (including yours) can write/modify the data until the lock is released.
 
 🚫 Example: Try to write while locked
 INSERT INTO emp_info VALUES (4, 'Raju', 'KKD', 45000); -- ❌ Will fail in READ lock
@@ -103,9 +103,10 @@ UNLOCK TABLES;
 
 ✅ Step 5: Lock Table in WRITE Mode
 LOCK TABLE emp_info WRITE;
-Current session can read/write.
 
-Other sessions are blocked from both reading and writing.
+. Locks the emp_info table for writing in your current session.
+. Only your session can read and write the table.
+. Other sessions cannot read or write until you issue UNLOCK TABLES.
 
 🔐 Part 2: Row-Level Locks (InnoDB Only)
 These are done inside transactions and affect only selected rows.
@@ -115,40 +116,134 @@ START TRANSACTION;
 
 SELECT * FROM emp_info WHERE id = 1 FOR UPDATE;
 
+🔒 What This Does (Row Locking with FOR UPDATE):
+Step	            Effect
+START TRANSACTION	Begins a new transaction (changes won't be permanent until 
+                    COMMIT).
+SELECT FOR UPDATE	Locks the row where id = 1 for exclusive update access.
+
 -- Now this row is locked exclusively for current session.
 -- No other session can update this row until COMMIT (they can read).
 
-UPDATE emp_info SET salary = salary + 5000 WHERE id = 1;
+-- Now you can safely update the row
+UPDATE emp_info SET salary = 60000 WHERE id = 1;
 
+-- Save changes and release the lock
 COMMIT;
 
 ✅ Step 7: Lock a Row for Shared Read
 START TRANSACTION;
 
 SELECT * FROM emp_info WHERE id = 2 LOCK IN SHARE MODE;
--- Other sessions can still read, but cannot update this row
 
--- Read-only logic
+What This Does (Shared Row Lock):
+Step	            Effect
+START TRANSACTION	Begins a transaction – locks stay until COMMIT or ROLLBACK.
+LOCK IN SHARE MODE	Locks the row for shared read. You and others can read, but    
+                    others cannot write/update/delete that row until you commit.
 
 COMMIT;
 
-🧠 Part 3: Metadata Locks
-These happen automatically when running schema changes.
+🧠 What Are Metadata Locks in MySQL?
+Metadata Locks (MDL) are locks that MySQL automatically uses to protect the structure of database objects (like tables, schemas, stored procedures, etc.) during access or change.
 
-Example:
-ALTER TABLE emp_info ADD COLUMN dept VARCHAR(30);
-While this is running, other sessions cannot query the emp_info table.
+🔐 Why Metadata Locks Exist
+They prevent structural conflicts such as:
+    One session trying to read from a table
+    While another session is trying to DROP or ALTER the same table
 
-MySQL uses metadata locks to prevent structural inconsistency.
+📦 When Are Metadata Locks Acquired?
+ActionType	        Example	                                Lock Purpose
+Querying a table	SELECT * FROM emp_info;	                Lock to prevent schema 
+                                                            changes while reading
+Changing schema	    ALTER TABLE emp_info ADD COLUMN dept;	Lock to ensure no one 
+                                                            is using the table during modification
+Transaction start	START TRANSACTION; SELECT ...	        Locks table structure 
+                                                            until COMMIT or ROLLBACK
 
-🧩 Part 4: Advisory Locks
-You can use custom named locks for logic-level coordination.
--- Acquire Lock (waits up to 10 seconds)
-SELECT GET_LOCK('emp_processing', 10);  -- returns 1 if successful
+🚫 Common Metadata Lock Issues
+You try to ALTER a table but it hangs. Why? Another session is reading from it inside a transaction.
 
--- Do critical section
+You try to DROP a table but another session has it open.
 
--- Release Lock
-SELECT RELEASE_LOCK('emp_processing');
-These are not tied to tables or rows—just logical locks for coordination between sessions.
+🧪 Example Scenario
+Session 1:
+START TRANSACTION;
+SELECT * FROM emp_info;
+-- Keeps metadata lock on emp_info until COMMIT
 
+Session 2 (runs during Session 1's transaction):
+ALTER TABLE emp_info ADD COLUMN email VARCHAR(100);
+-- ❌ This will hang until Session 1 commits or rolls back
+
+🧪 Check Metadata Locks
+SELECT * FROM performance_schema.metadata_locks;
+
+
+🧩 Part 4: MySQL Advisory Locks — Custom Named Locks for App-Level Coordination
+Advisory locks in MySQL are user-defined application-level locks, not tied to specific tables or rows.
+✅ Syntax: GET_LOCK() and RELEASE_LOCK()
+🔒 Acquire a Lock
+    SELECT GET_LOCK('my_custom_lock', 10);
+
+'my_custom_lock' → A name you define (string).
+10 → Maximum wait time in seconds.
+Returns 1 if lock is acquired, 0 if not, NULL on error.
+
+🔓 Release a Lock
+SELECT RELEASE_LOCK('my_custom_lock');
+Returns 1 if released, 0 if not held, NULL on error.
+
+************************************************************************************
+Practical Example:
+🧱 Step 1: Create Table
+CREATE TABLE EMP_INFO (
+    ID INT PRIMARY KEY,
+    FIRST_NAME VARCHAR(50),
+    LAST_NAME VARCHAR(50),
+    SALARY FLOAT
+);
+
+📥 Step 2: Insert Sample Data
+INSERT INTO EMP_INFO (ID, FIRST_NAME, LAST_NAME, SALARY) VALUES
+(1, 'Ram', 'Kumar', 25000),
+(2, 'Ravi', 'Sharma', 30000);
+
+🔄 Step 3: Simulate Advisory Locking
+
+🧑‍💻 Session 1: Acquire Lock Before Update
+-- Try to get the advisory lock
+SELECT GET_LOCK('emp_salary_update', 5);
+-- Output: 1 (Lock acquired)
+
+-- Now safely update salary (protected by the lock)
+UPDATE EMP_INFO SET SALARY = SALARY + 1000 WHERE ID = 1;
+
+🧑‍💻 Session 2 (runs at same time): Try to Acquire Same Lock
+-- Try to get the same lock
+SELECT GET_LOCK('emp_salary_update', 5);
+-- Output: 0 (Could not acquire, Session 1 holds it)
+
+✅ Session 1: Done with Work, Release Lock
+-- Release the advisory lock
+SELECT RELEASE_LOCK('emp_salary_update');
+-- Output: 1 (Lock released)
+
+🧑‍💻 Session 2: Try Again After Lock Released
+-- Try again (after Session 1 releases)
+SELECT GET_LOCK('emp_salary_update', 5);
+-- Output: 1 (Now it’s acquired)
+
+-- Session 2 can now proceed safely
+UPDATE EMP_INFO SET SALARY = SALARY + 500 WHERE ID = 2;
+
+-- Release when done
+SELECT RELEASE_LOCK('emp_salary_update');
+
+🔎 Final Check
+SELECT * FROM EMP_INFO;
+Output:
+
+ID	FIRST_NAME	LAST_NAME	SALARY
+1	Ram	Kumar	26000
+2	Ravi	Sharma	30500
