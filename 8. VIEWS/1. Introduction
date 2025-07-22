@@ -18,32 +18,48 @@ Dis-adv:
 SYNTAX:
     Create view <viewname> as select <cols-list> from <tablename> where <condition>;
 
-Example:
-    Create view empview as select RNO,NAME from EMP_INFO;
-    show tables;
-    select * from empview;
+Practical:
+🧱 Step 1: Create the Main Table
+    CREATE TABLE EMP_INFO (
+        ID INT PRIMARY KEY,
+        NAME VARCHAR(50),
+        DEPT VARCHAR(30),
+        SALARY INT
+    );
 
-Example:
-    Create view My_students as select * from students where branch="ece";
+➕ Step 2: Insert Sample Records
+    INSERT INTO EMP_INFO (ID, NAME, DEPT, SALARY) VALUES
+    (101, 'Ravi', 'HR', 45000),
+    (102, 'Anita', 'IT', 70000),
+    (103, 'Suman', 'Finance', 85000),
+    (104, 'John', 'IT', 90000),
+    (105, 'Priya', 'HR', 40000);
 
-Example:
+👁️ Step 3: Create a View with a Condition
+Create a view that shows employees with a salary over 60,000:
     CREATE VIEW high_salary_employees AS
-SELECT first_name, last_name, salary
-FROM employees
-WHERE salary > 80000;
+    SELECT ID, NAME, SALARY
+    FROM EMP_INFO
+    WHERE SALARY > 60000;
 
+🔍 Step 4: Query the View
+    SELECT * FROM high_salary_employees;
 
-To drop view:
-    Drop view <view_name>;
+Expected Output:
+    ID   |  NAME   | SALARY
+    -----|---------|--------
+    102  | Anita   | 70000
+    103  | Suman   | 85000
+    104  | John    | 90000
 
-Ex:
-    Drop view empview;
+✏️ Step 5: Update Data Through the View
+Update salary for ID 102 using the view:
+    UPDATE high_salary_employees
+    SET SALARY = 75000
+    WHERE ID = 102;
 
-To update view:
-Ex:
-    UPDATE employee_view
-    SET salary = 90000
-    WHERE id = 1;
-    
+✅ Now check the base table:
+    SELECT * FROM EMP_INFO WHERE ID = 102;
 
-
+❌ Step 6: Drop the View
+    DROP VIEW high_salary_employees;
