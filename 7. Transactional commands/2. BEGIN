@@ -7,12 +7,104 @@
     committed ------ saved permanently in Database.
     rollback-------- Revert the changes.
 
-    Syntax:
-    START TRANSACTION;(or)
-    BEGIN;(or)
-    Begin transaction;
+✅ Transaction Control in SQL
+🔹 What is a Transaction?
+A transaction is a group of SQL statements that are executed as a single unit. Either all the operations within the transaction succeed, or none of them do.
 
-    #To know the Transactions
-    select @@Trancount;
-    show session status like 'Com_commit';
-    show session status like 'Com_rollback';
+🔸 1. Starting a Transaction
+You can use any of the following:
+START TRANSACTION;
+-- or
+BEGIN;
+-- or
+BEGIN TRANSACTION;
+
+This signals the database to track all subsequent changes until a COMMIT or ROLLBACK is issued.
+
+🔸 2. COMMIT
+COMMIT;
+✅ Permanently saves all changes made during the current transaction.
+
+🔸 3. ROLLBACK
+ROLLBACK;
+❌ Undoes all changes made during the current transaction since it began.
+
+🔸 4. Checking Transaction Count
+SELECT @@TRANCOUNT;
+Returns the number of open transactions for the current session.
+
+🔸 5. Viewing Transaction Status (MySQL specific)
+SHOW SESSION STATUS LIKE 'Com_commit';
+SHOW SESSION STATUS LIKE 'Com_rollback';
+
+Com_commit: Number of commits in the session.
+Com_rollback: Number of rollbacks in the session.
+
+************************************************************************************
+Practical:
+🔧 Setup: Create Table & Insert Sample Data
+First, create a test table and add some sample records:
+
+-- Step 1: Create a test table
+    CREATE TABLE BANK_ACCOUNTS (
+        ACC_ID INT PRIMARY KEY,
+        NAME VARCHAR(50),
+        BALANCE DECIMAL(10,2)
+    );
+
+-- Step 2: Insert sample data
+    INSERT INTO BANK_ACCOUNTS VALUES
+    (1, 'Alice', 5000.00),
+    (2, 'Bob', 3000.00);
+
+💡 Scenario: Fund Transfer Between Accounts
+Suppose Alice sends ₹1000 to Bob. This should be atomic — both debit and credit must succeed, or neither should.
+
+✅ Example with COMMIT (Successful Transfer)
+-- Start the transaction
+START TRANSACTION;
+
+-- Debit ₹1000 from Alice's account
+UPDATE BANK_ACCOUNTS
+SET BALANCE = BALANCE - 1000
+WHERE ACC_ID = 1;
+
+-- Credit ₹1000 to Bob's account
+UPDATE BANK_ACCOUNTS
+SET BALANCE = BALANCE + 1000
+WHERE ACC_ID = 2;
+
+-- If both updates are correct, commit the transaction
+COMMIT;
+✅ Now, Alice has ₹4000, and Bob has ₹4000.
+
+❌ Example with ROLLBACK (Something Goes Wrong)
+Let’s simulate a failure and roll back the transaction:
+-- Start the transaction
+START TRANSACTION;
+
+-- Debit ₹1000 from Alice
+UPDATE BANK_ACCOUNTS
+SET BALANCE = BALANCE - 1000
+WHERE ACC_ID = 1;
+
+-- Intentional error: wrong ACC_ID
+UPDATE BANK_ACCOUNTS
+SET BALANCE = BALANCE + 1000
+WHERE ACC_ID = 999;  -- Bob’s ID is 2, this will fail or affect nothing
+
+-- Realizing the mistake, roll back
+ROLLBACK;
+❌ This will revert Alice’s debit because the second update failed.
+
+🧾 Check Transaction Counts (Optional)
+-- How many transactions are open (SQL Server)
+SELECT @@TRANCOUNT;
+
+-- How many commits/rollbacks (MySQL)
+SHOW SESSION STATUS LIKE 'Com_commit';
+SHOW SESSION STATUS LIKE 'Com_rollback';
+
+✅ Final State Check
+-- View current balances
+SELECT * FROM BANK_ACCOUNTS;

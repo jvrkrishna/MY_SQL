@@ -8,7 +8,7 @@
     
 #Auto commit mode
     As we know By default all DDL command are auto committed.
-    Bt default, many databases operate in auto commit mode, where each individual SQL statements is automatically committed.
+    By default, many databases operate in auto commit mode, where each individual SQL statements is automatically committed.
     In auto commit mode each SQL statement is transaction.
     To execute multiple statements as single transaction, we must explicitly start the transaction.
 

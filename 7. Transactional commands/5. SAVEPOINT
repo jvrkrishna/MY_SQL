@@ -10,14 +10,51 @@
         SAVEPOINT savepoint_name;
 
     Example:
-        START TRANSACTION;
-        update EMP_INFO set salary =5999 where id=101;
-        update EMP_INFO set salary =6000 where id=103;
-        select * from EMP_INFO;
+        CREATE TABLE EMP_INFO (
+        ID INT PRIMARY KEY,
+        NAME VARCHAR(50),
+        SALARY INT
+        );
 
+        INSERT INTO EMP_INFO VALUES
+        (101, 'Ravi', 5500),
+        (102, 'Anita', 5800),
+        (103, 'Suman', 5900);
+
+    🔄 Transaction with SAVEPOINT
+        -- Step 1: Begin the transaction
+        START TRANSACTION;
+
+        -- Step 2: Make some updates
+        UPDATE EMP_INFO SET SALARY = 5999 WHERE ID = 101;
+        UPDATE EMP_INFO SET SALARY = 6000 WHERE ID = 103;
+
+        -- Check current state
+        SELECT * FROM EMP_INFO;
+
+        -- Step 3: Set a savepoint
         SAVEPOINT sal_save;
 
-        update EMP_INFO set name ="RAJU" where id=103;
-        select * from EMP_INFO;
+        -- Step 4: Another update
+        UPDATE EMP_INFO SET NAME = 'RAJU' WHERE ID = 103;
 
-        #From the above we have three options 1 is to commit, 2 is to rollback entire transaction form starting, 3 to rollback to specific savepoint.
+        -- Check state again
+        SELECT * FROM EMP_INFO;
+        🔁 Now you have 3 options:
+        ✅ Option 1: COMMIT
+            COMMIT;
+        🔒 This saves all changes permanently, including name change to "RAJU".
+
+        🔄 Option 2: Rollback Entire Transaction
+            ROLLBACK;
+        🛑 This will undo everything — no salary or name changes will persist.
+
+        🔂 Option 3: Rollback to Savepoint
+            ROLLBACK TO sal_save;
+        ⏪ This undoes only the name update, but keeps the salary changes.
+
+        After rolling back to sal_save, if you're satisfied, you can still COMMIT to save the salary updates:
+            COMMIT;
+
+        🔍 Final Check
+            SELECT * FROM EMP_INFO;
