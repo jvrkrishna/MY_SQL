@@ -92,7 +92,6 @@ INSERT INTO emp_info (id, name, address, salary) VALUES
 ✅ Step 3: Lock Table in READ Mode
     LOCK TABLE emp_info READ;
 
-. Locks the emp_info table for reading.
 . Other sessions can also read the table, but no session (including yours) can write/modify the data until the lock is released.
 
 🚫 Example: Try to write while locked
@@ -104,7 +103,6 @@ UNLOCK TABLES;
 ✅ Step 5: Lock Table in WRITE Mode
 LOCK TABLE emp_info WRITE;
 
-. Locks the emp_info table for writing in your current session.
 . Only your session can read and write the table.
 . Other sessions cannot read or write until you issue UNLOCK TABLES.
 
@@ -126,6 +124,7 @@ SELECT FOR UPDATE	Locks the row where id = 1 for exclusive update access.
 -- No other session can update this row until COMMIT (they can read).
 
 -- Now you can safely update the row
+START TRANSACTION;
 UPDATE emp_info SET salary = 60000 WHERE id = 1;
 
 -- Save changes and release the lock

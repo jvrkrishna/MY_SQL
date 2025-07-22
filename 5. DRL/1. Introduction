@@ -19,6 +19,22 @@ Ex:
 SELECT command with WHERE clause:
     SELECT <col_1>,<col_2> FROM <table_name> WHERE condition;
 
+************************************************************************************
+Practical:
+    CREATE TABLE Employee (
+        ID INT PRIMARY KEY AUTO_INCREMENT,  -- Optional, to uniquely identify each employee
+        NAME VARCHAR(100),
+        SAL DECIMAL(10, 2),
+        JDATE DATE
+    );
+
+    INSERT INTO Employee (NAME, SAL, JDATE) VALUES 
+    ('Alice', 32000.50, '2022-01-10'),
+    ('Bob', 28000.00, '2021-07-01'),
+    ('Charlie', 35000.75, '2020-11-20'),
+    ('Ram', 30000.00, '2023-03-15');
+
+
 Q. Select name and salary of all the employees.
     SELECT NAME,SAL from Employee;
 
