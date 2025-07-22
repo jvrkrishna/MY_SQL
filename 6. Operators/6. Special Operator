@@ -1,9 +1,29 @@
+      CREATE TABLE EMP_INFO (
+        EMP_ID INT PRIMARY KEY,
+        NAME VARCHAR(50),
+        SAL INT,
+        JDATE DATE,
+        EMAIL VARCHAR(100),
+        ADDRESS VARCHAR(255)
+    );
+
+    INSERT INTO EMP_INFO (EMP_ID, NAME, SAL, JDATE, EMAIL, ADDRESS) VALUES
+    (1, 'Suresh', 26000, '2019-01-26', NULL, NULL),
+    (2, 'Ankita', 50000, '2019-08-16', 'ankita@email.com', 'Delhi'),
+    (3, 'Rahul', 60000, '2020-05-10', 'rahul@email.com', 'Mumbai'),
+    (4, 'Sunita', 40000, '2018-03-12', NULL, 'Pune'),
+    (5, 'Pooja', 25000, '2021-11-25', 'pooja@email.com', NULL),
+    (6, 'Pranika', 75000, '2019-10-05', NULL, 'Hyderabad'),
+    (7, 'Surya', 55000, '2020-07-20', 'surya@email.com', 'Chennai'),
+    (8, 'Suman', 15000, '2022-01-15', 'suman@email.com', NULL),
+    (9, 'Ritika', 9999, '2017-09-19', NULL, NULL),
+    (10, 'Rohit', 30000, '2020-03-01', 'rohit@email.com', 'Bangalore');
+    
 Between and Not Betweeen Operator:
     The between operator is used to retrieve the value from a specific range.
 
     Syntax:
         SELECT <col_1>,<col_2> FROM <table_name> WHERE col BETWEEN start_value AND stop_value;
-    
     Ex:
         Select * from Emp_info where SAL between 20000 and 40000;
         Select * from Emp_info where SAL>=20000 and SAL<=40000;
