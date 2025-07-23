@@ -4,4 +4,8 @@ Syntax:
 Ex:
     select max(sal) from EMP_INFO;
 
-    
+Practical:
+3️⃣ MAX() – Highest Value
+SELECT MAX(SALARY) AS Highest_Salary FROM EMP_INFO;
+🔸 Returns: 9500
+

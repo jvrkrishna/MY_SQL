@@ -6,12 +6,25 @@
     It's primarily used for passing values that you need to use for queries, conditions, or calculations within the procedure.
 
 
-Example:
-    DELIMITER $$
-        CREATE PROCEDURE get_Stu_id(IN employee_id INT)
-        BEGIN
-        SELECT * FROM EMP_INFO WHERE id = employee_id;
-        END $$
-    DELIMITER ;
+🔹 Step 4: Create Procedure with an IN Parameter
+DELIMITER $$
 
-call get_Stu_id(2);
+CREATE PROCEDURE get_Stu_by_salary(IN min_salary INT)
+BEGIN
+    SELECT * FROM EMP_INFO WHERE SALARY >= min_salary;
+END $$
+
+DELIMITER ;
+
+🔸 Now call it like this:
+    CALL get_Stu_by_salary(8500);
+🟢 Returns all employees with salary >= 8500
+
+🔹 Step 5: Drop a Procedure
+    DROP PROCEDURE IF EXISTS get_Stu_info;
+    DROP PROCEDURE IF EXISTS get_Stu_by_salary;
+
+📝 Notes:
+    IN – sends a value into the procedure
+    OUT – returns a value from the procedure
+    INOUT – sends a value into and gets back an updated value

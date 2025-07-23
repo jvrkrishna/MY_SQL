@@ -4,28 +4,34 @@
     OUT parameters do not need to be initialized before calling the procedure. They are set by the procedure itself.
     You can use multiple OUT parameters to return several values from a procedure. This allows you to send multiple results back to the calling program.
 
-
 Example:
-DROP procedure if exists count_ids;
+    DELIMITER $$
 
-DELIMITER $$
-    CREATE PROCEDURE count_ids(OUT totalcount INT)
+    CREATE PROCEDURE get_total_employees(OUT total INT)
     BEGIN
-        SELECT count(*) INTO totalcount FROM EMP_INFO;
+        SELECT COUNT(*) INTO total FROM EMP_INFO;
     END $$
-DELIMITER ;
 
--- First call to procedure
-SET @id = 0;
-CALL count_ids(@id);
+    DELIMITER ;
 
--- Now @id should hold the count from EMP_INFO, let's check the value
-SELECT @id;
+🔍 What it does:
+    Creates a procedure named get_total_employees
+    It has one OUT parameter: total
+    It counts the number of rows (employees) in the EMP_INFO table
+    It stores that count into the total parameter
 
--- Second call with @addToNumber
-SET @addToNumber = 100;
-CALL count_ids(@id);
+▶️ How to call it:
+    CALL get_total_employees(@emp_count);
+🔹 This runs the procedure and stores the result in the session variable @emp_count.
 
--- Final calculation
-SET @totalAddition = @addToNumber + @id;
-SELECT @totalAddition;
+📊 Get the result:
+SELECT @emp_count AS Total_Employees;
+
+🧾 Sample Output:
+    Total_Employees
+    3
+
+⚠️ This output depends on how many records are actually present in your EMP_INFO table.
+
+
+

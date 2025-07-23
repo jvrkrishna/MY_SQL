@@ -12,3 +12,10 @@ Ex: * means all columns
     select DISTINCT place from EMP_INFO:
 
     select count(emp_id) from EMP_INFO where designation="Manager";
+
+5️⃣ COUNT() – Count Rows
+SELECT COUNT(*) AS Total_Employees FROM EMP_INFO;
+🔸 Returns: 5
+
+You can also count only rows with a non-null salary:
+SELECT COUNT(SALARY) AS Count_With_Salary FROM EMP_INFO;

@@ -1,39 +1,65 @@
 Creating INDEX statement in sql is used to create indexes in tables.
 The indexes are used to retrieve data from the database more quickly than others.
 The user can not see the indexes, and they are just used to speed up queries/ searches.
-Note: Updating the table with indexes takes a lot of time than updating a table without indexes. It is because the indexes also need an update.
-So, only create indexes on those columns that will be frequently searched against.
+Note: 
+    🔸 Indexes speed up SELECT queries on large tables.
+    🔸 Indexes slow down INSERT, UPDATE, DELETE because the index also needs to be  
+        updated.
+    🔸 You cannot see the index data, but you can verify it with SHOW INDEX.
 
-use College;
-show tables;
+Practical:
+🏗️ Step 1: Create Database and Use It
+    CREATE DATABASE College;
+    USE College;
+
+📋 Step 2: Create Table
+    CREATE TABLE EMP_INFO (
+        ID INT PRIMARY KEY,
+        NAME VARCHAR(50),
+        DEPT VARCHAR(50),
+        SALARY INT
+    );
+
+➕ Step 3: Insert Sample Data
+    INSERT INTO EMP_INFO VALUES
+    (101, 'Ravi', 'HR', 6000),
+    (102, 'Anita', 'IT', 9000),
+    (103, 'Suman', 'Finance', 8500),
+    (104, 'John', 'IT', 7500),
+    (105, 'Priya', 'HR', 9500);
 
 select * from EMP_INFO;
-Create Index Syntax:
-    Create Index <Index_Name> on table (<Column_name>)
 
-Q. Create Employee Data whose salary is more than 8000.
-create index salary_index on EMP_INFO (salary asc);
+⚙️ Step 4: Create an Index on SALARY
+    Create Index Syntax:
+    Create Index <Index_Name> on table (<Column_name>) 
 
-select * from EMP_INFO where salary>8000;
+    CREATE INDEX salary_index ON EMP_INFO (SALARY ASC);
+    ✅ This index will optimize queries that filter or sort using SALARY.
 
--- Create a unique index
-CREATE UNIQUE INDEX idx_unique_column ON tablename(columnname);
+🔍 Step 5: Run an Indexed Query
+    SELECT * FROM EMP_INFO WHERE SALARY > 8000;
+This query uses the salary_index to retrieve results faster.
 
--- Add an index when creating a table
-CREATE TABLE tablename (
-    id INT,
-    name VARCHAR(50),
-    INDEX idx_name(name)
-);
+🔏 Step 6: Create a UNIQUE INDEX
+Suppose NAME should be unique:
+    CREATE UNIQUE INDEX idx_unique_name ON EMP_INFO(NAME);
+    🛑 Now if you try to insert a duplicate name, it will throw an error.
 
-To view the indexes:
-    SHOW INDEX FROM table_name;
-    SHOW INDEX FROM employees;
+    ❌ Try to Insert Duplicate NAME
+    -- This will fail because 'Ravi' already exists
+    INSERT INTO EMP_INFO VALUES (103, 'Ravi', 'Finance', 8500);
 
-DROP Index:
-    DROP INDEX idx_columnname ON tablename;
+🏗️ Alternative: Add INDEX While Creating Table
+    CREATE TABLE DEPT (
+        ID INT,
+        NAME VARCHAR(50),
+        INDEX idx_dept_name(NAME)
+    );
 
-Example:
-Let's say you have a table called employees with an index named idx_lastname on the last_name column.
-To drop that index: 
-    DROP INDEX idx_lastname ON employees;
+📖 Step 7: View All Indexes on a Table
+    SHOW INDEX FROM EMP_INFO;
+
+❌ Step 8: Drop an Index
+    DROP INDEX salary_index ON EMP_INFO;
+    DROP INDEX idx_unique_name ON EMP_INFO;

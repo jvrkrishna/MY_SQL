@@ -3,3 +3,9 @@ Syntax:
     select min(column_name) from <table_name>;
 Ex:
     select min(sal) from EMP_INFO;
+
+Practical:
+4️⃣ MIN() – Lowest Value
+SELECT MIN(SALARY) AS Lowest_Salary FROM EMP_INFO;
+🔸 Returns: 6000
+
