@@ -35,138 +35,175 @@ Cross Join:
 Self Join:
     Joins a table with itself, allowing you to compare rows within the same table based on specific conditions. 
 
-*****************************************************************************
-Practical:
-    create database HTS;
-    show databases;
-    use HTS;
-    *************************************************************************
-    Creating tables
+|--------------------------------------------------------------------------------- |
+| **INNER JOIN**->Returns only rows where there’s a match in both tables.    
+                                           
+| **LEFT JOIN**->Returns all rows from the left table + matching from the right. NULL if no match. 
+                    
+| **RIGHT JOIN**->Returns all rows from the right table + matching from the left. NULL if no match. 
+                    
+| **FULL OUTER JOIN**->Returns all rows from both tables (MySQL does **not** support this natively; workaround via `UNION`). 
 
-Table 1: employees
+| **CROSS JOIN**->Returns the Cartesian product (every row of A with every row of B).                                   
 
-CREATE TABLE employees (
-    emp_id INT PRIMARY KEY,
-    emp_name VARCHAR(100),
-    salary DECIMAL(10, 2),
-    dept_id INT,
-    manager_id INT
-);
-
-Table 2: managers
-CREATE TABLE managers (
-    manager_id INT PRIMARY KEY,
-    manager_name VARCHAR(100),
-    dept_id INT
-);
-
-Table 3: departments
-CREATE TABLE departments (
-    dept_id INT PRIMARY KEY,
-    dept_name VARCHAR(100)
-);
-
-Table 4: projects
-CREATE TABLE projects (
-    project_id INT PRIMARY KEY,
-    project_name VARCHAR(100),
-    team_member_id INT
-);
-This assumes team_member_id refers to an emp_id from the employees table.
-
-    *************************************************************************
-    Inserting values into the tables
-
-🔹 Insert into departments
-INSERT INTO departments (dept_id, dept_name) VALUES
-(1, 'Engineering'),
-(2, 'Human Resources'),
-(3, 'Marketing'),
-(4, 'Finance'),
-(10, 'Technician');
-
-🔹 Insert into managers
-INSERT INTO managers (manager_id, manager_name, dept_id) VALUES
-(101, 'Alice Johnson', 1),
-(102, 'Bob Smith', 2),
-(103, 'Catherine Lee', 3);
--- No manager for dept_id 4 to test LEFT JOIN
-
-🔹 Insert into employees
-INSERT INTO employees (emp_id, emp_name, salary, dept_id, manager_id) VALUES
-(1, 'John Doe', 60000, 1, 101),
-(2, 'Jane Smith', 55000, 1, 101),
-(3, 'Samuel Green', 50000, 2, 102),
-(4, 'Nina Patel', 52000, 3, 103),
-(5, 'Luke Brown', 48000, 4, NULL),  -- Employee in a dept with no manager
-(6, 'Emily Davis', 51000, 2, 102),
-(7, 'John Ram', 70000, 5, 101);
-
-🔹 Insert into projects
-INSERT INTO projects (project_id, project_name, team_member_id) VALUES
-(201, 'Apollo Upgrade', 1),
-(202, 'HR Revamp', 3),
-(203, 'Marketing Blitz', 4),
-(204, 'Finance Audit', 5),
-(205, 'Onboarding Automation', 6),
-(206, 'System Overhaul', NULL); -- Project with no assigned team member
-
-select * from employees;
-select * from departments;
-select * from managers;
-select * from projects;
-
-Syntax for inner join/JOIN:
-    SELECT 
-        table1.column1, 
-        table2.column2, 
-        ...
-    FROM 
-        table1
-    INNER JOIN 
-        table2
-    ON 
-        table1.common_column = table2.common_column;
+| **SELF JOIN**->Joins a table to itself (e.g., finding employees reporting to the same manager).                      
 
 *****************************************************************************
-INNER join --> Fetches all the matching records
-Left Join --> inner Join + additional record from left table
-Right Join --> inner Join + additional records from right table
+🏗️ Step 1: Create Database & Use It
+    CREATE DATABASE HTS;
+    USE HTS;
 
-Q. -- I need to fetch two tables that are employees and departments.
--- inner join /JOIN
-select e.emp_name, d.dept_name
-from employees e
-join departments d on e.dept_id = d.dept_id;
+🏢 Step 2: Create Tables
+    CREATE TABLE employees (
+        emp_id INT PRIMARY KEY,
+        emp_name VARCHAR(100),
+        salary DECIMAL(10, 2),
+        dept_id INT,
+        manager_id INT
+    );
 
-Q. -- Fetch All the employee name and the department name they belong to.
--- left join=inner join + any additional records in the left table.
-select e.emp_name, d.dept_name
-from employees e
-left join departments d on e.dept_id = d.dept_id;
+    CREATE TABLE managers (
+        manager_id INT PRIMARY KEY,
+        manager_name VARCHAR(100),
+        dept_id INT
+    );
 
-Q. -- Fetch All the employee name and the department name they belong to.
--- right join=inner join + any additional records in the right table.
-select e.emp_name, d.dept_name
-from employees e
-right join departments d on e.dept_id = d.dept_id;
+    CREATE TABLE departments (
+        dept_id INT PRIMARY KEY,
+        dept_name VARCHAR(100)
+    );
 
-Q. -- Fetch details of All emp, their manager, their department and the projects they work on.
--- step 1
-select e.emp_name, d.dept_name
-from employees e
-left join departments d on e.dept_id=d.dept_id;
+    CREATE TABLE projects (
+        project_id INT PRIMARY KEY,
+        project_name VARCHAR(100),
+        team_member_id INT
+    );
 
--- step 2
-select e.emp_name, d.dept_name,m.manager_name
-from employees e
-left join departments d on e.dept_id=d.dept_id
-inner join managers m on m.manager_id=e.manager_id;
+📥 Step 3: Insert Data
+    INSERT INTO departments VALUES 
+    (1, 'Engineering'),
+    (2, 'Human Resources'),
+    (3, 'Marketing'),
+    (4, 'Finance'),
+    (10, 'Technician');
 
--- step 3
-select e.emp_name, d.dept_name,m.manager_name,p.project_name
-from employees e
-left join departments d on e.dept_id=d.dept_id
-inner join managers m on m.manager_id=e.manager_id
-left join projects p on p.team_member_id=e.emp_id;
+    INSERT INTO managers VALUES 
+    (101, 'Alice Johnson', 1),
+    (102, 'Bob Smith', 2),
+    (103, 'Catherine Lee', 3);
 
+    INSERT INTO employees VALUES
+    (1, 'John Doe', 60000, 1, 101),
+    (2, 'Jane Smith', 55000, 1, 101),
+    (3, 'Samuel Green', 50000, 2, 102),
+    (4, 'Nina Patel', 52000, 3, 103),
+    (5, 'Luke Brown', 48000, 4, NULL),
+    (6, 'Emily Davis', 51000, 2, 102),
+    (7, 'John Ram', 70000, 5, 101);
+
+    INSERT INTO projects VALUES
+    (201, 'Apollo Upgrade', 1),
+    (202, 'HR Revamp', 3),
+    (203, 'Marketing Blitz', 4),
+    (204, 'Finance Audit', 5),
+    (205, 'Onboarding Automation', 6),
+    (206, 'System Overhaul', NULL);
+
+✅ Join Examples
+1️⃣ INNER JOIN – Employees & Departments
+    SELECT e.emp_name, d.dept_name
+    FROM employees e
+    JOIN departments d ON e.dept_id = d.dept_id;
+    +--------------+-------------------+
+    | emp_name     | dept_name         |
+    +--------------+-------------------+
+    | John Doe     | Engineering       |
+    | Jane Smith   | Engineering       |
+    | Samuel Green | Human Resources   |
+    | Nina Patel   | Marketing         |
+    | Luke Brown   | Finance           |
+    | Emily Davis  | Human Resources   |
+    +--------------+-------------------+
+
+2️⃣ LEFT JOIN – All Employees (Even if No Department Match)
+
+    SELECT e.emp_name, d.dept_name
+    FROM employees e
+    LEFT JOIN departments d ON e.dept_id = d.dept_id;
+    +--------------+-------------------+
+    | emp_name     | dept_name         |
+    +--------------+-------------------+
+    | John Doe     | Engineering       |
+    | Jane Smith   | Engineering       |
+    | Samuel Green | Human Resources   |
+    | Nina Patel   | Marketing         |
+    | Luke Brown   | Finance           |
+    | Emily Davis  | Human Resources   |
+    | John Ram     | NULL              |
+    +--------------+-------------------+
+
+3️⃣ RIGHT JOIN – All Departments (Even if No Employees)
+    SELECT e.emp_name, d.dept_name
+    FROM employees e
+    RIGHT JOIN departments d ON e.dept_id = d.dept_id;
+    +--------------+-------------------+
+    | emp_name     | dept_name         |
+    +--------------+-------------------+
+    | John Doe     | Engineering       |
+    | Jane Smith   | Engineering       |
+    | Samuel Green | Human Resources   |
+    | Emily Davis  | Human Resources   |
+    | Nina Patel   | Marketing         |
+    | Luke Brown   | Finance           |
+    | NULL         | Technician        |
+    +--------------+-------------------+
+
+🧩 Complex Join: Employees + Department + Manager + Project
+Step 1️⃣: Employees + Department
+    SELECT e.emp_name, d.dept_name
+    FROM employees e
+    LEFT JOIN departments d ON e.dept_id = d.dept_id;
+    +--------------+-------------------+
+    | emp_name     | dept_name         |
+    +--------------+-------------------+
+    | John Doe     | Engineering       |
+    | Jane Smith   | Engineering       |
+    | Samuel Green | Human Resources   |
+    | Nina Patel   | Marketing         |
+    | Luke Brown   | Finance           |
+    | Emily Davis  | Human Resources   |
+    | John Ram     | NULL              |
+    +--------------+-------------------+
+
+Step 2️⃣: Add Manager Info
+    SELECT e.emp_name, d.dept_name, m.manager_name
+    FROM employees e
+    LEFT JOIN departments d ON e.dept_id = d.dept_id
+    INNER JOIN managers m ON m.manager_id = e.manager_id;
+    +--------------+-------------------+------------------+
+    | emp_name     | dept_name         | manager_name     |
+    +--------------+-------------------+------------------+
+    | John Doe     | Engineering       | Alice Johnson    |
+    | Jane Smith   | Engineering       | Alice Johnson    |
+    | Samuel Green | Human Resources   | Bob Smith        |
+    | Nina Patel   | Marketing         | Catherine Lee    |
+    | Emily Davis  | Human Resources   | Bob Smith        |
+    | John Ram     | NULL              | Alice Johnson    |
+    +--------------+-------------------+------------------+
+
+Step 3️⃣: Add Project Info
+    SELECT e.emp_name, d.dept_name, m.manager_name, p.project_name
+    FROM employees e
+    LEFT JOIN departments d ON e.dept_id = d.dept_id
+    INNER JOIN managers m ON m.manager_id = e.manager_id
+    LEFT JOIN projects p ON p.team_member_id = e.emp_id;
++--------------+-------------------+------------------+--------------------------+
+| emp_name     | dept_name         | manager_name     | project_name             |
++--------------+-------------------+------------------+--------------------------+
+| John Doe     | Engineering       | Alice Johnson    | Apollo Upgrade           |
+| Jane Smith   | Engineering       | Alice Johnson    | NULL                     |
+| Samuel Green | Human Resources   | Bob Smith        | HR Revamp                |
+| Nina Patel   | Marketing         | Catherine Lee    | Marketing Blitz          |
+| Emily Davis  | Human Resources   | Bob Smith        | Onboarding Automation    |
+| John Ram     | NULL              | Alice Johnson    | NULL                     |
++--------------+-------------------+------------------+--------------------------+
