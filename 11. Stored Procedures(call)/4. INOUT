@@ -1,74 +1,105 @@
-#INOUT PARAMETER:
-    In MySQL, the INOUT parameter is used in stored procedures or functions to pass parameters that can both be input (received by the procedure) and output (modified by the procedure). This is different from an IN parameter, which only passes data into the procedure, or an OUT parameter, which only passes data back.
+🔹 INOUT Parameter in MySQL
+
+In MySQL, the INOUT parameter is used in stored procedures or functions to pass parameters that act as both input and output.
+
+This is different from:
+
+IN parameter → passes data into the procedure only
+
+OUT parameter → returns data from the procedure only
+
+How INOUT Works
 
 Input: The value is passed into the procedure when it is called.
 
-Output: The procedure can modify this value, and the changes are reflected outside the procedure after execution.
+Output: The procedure can modify this value, and the updated value is available outside the procedure after execution.
 
-Example:
 ✅ MySQL Stored Procedure Examples with Parameters
-We’ll continue with the same EMP_INFO table:
-    CREATE TABLE EMP_INFO (
-        ID INT PRIMARY KEY,
-        NAME VARCHAR(50),
-        SALARY INT,
-        ADDRESS VARCHAR(100)
-    );
 
-    INSERT INTO EMP_INFO VALUES
-    (1, 'Ravi', 8000, 'Hyderabad'),
-    (2, 'Anita', 9000, 'Delhi'),
-    (3, 'Suman', 8500, 'Mumbai');
+We’ll use the following EMP_INFO table:
+
+CREATE TABLE EMP_INFO (
+    ID INT PRIMARY KEY,
+    NAME VARCHAR(50),
+    SALARY INT,
+    ADDRESS VARCHAR(100)
+);
+
+INSERT INTO EMP_INFO VALUES
+(1, 'Ravi', 8000, 'Hyderabad'),
+(2, 'Anita', 9000, 'Delhi'),
+(3, 'Suman', 8500, 'Mumbai');
 
 1️⃣ Stored Procedure with IN and OUT Parameters
-📌 Use case: Pass a salary limit and get the count of employees earning more.
-    DELIMITER $$
 
-    CREATE PROCEDURE get_emp_count_above_salary (
-        IN min_sal INT,
-        OUT emp_count INT
-    )
-    BEGIN
-        SELECT COUNT(*) INTO emp_count FROM EMP_INFO WHERE SALARY > min_sal;
-    END $$
-    DELIMITER ;
+📌 Use case: Pass a salary limit and get the count of employees earning more than that amount.
 
-▶️ Call it:
-    CALL get_emp_count_above_salary(8500, @total);
-    SELECT @total AS Count_Above_8500;
+DELIMITER $$
+
+CREATE PROCEDURE get_emp_count_above_salary (
+    IN min_sal INT,
+    OUT emp_count INT
+)
+BEGIN
+    SELECT COUNT(*) 
+    INTO emp_count 
+    FROM EMP_INFO 
+    WHERE SALARY > min_sal;
+END $$
+
+DELIMITER ;
+
+
+▶️ Call the procedure:
+
+CALL get_emp_count_above_salary(8500, @total);
+SELECT @total AS Count_Above_8500;
 
 2️⃣ Stored Procedure with INOUT Parameter
-📌 Use case: Pass a salary and increase it by 10% within the procedure.
-    DELIMITER $$
 
-    CREATE PROCEDURE increase_salary_by_10 (
-        INOUT input_salary INT
-    )
-    BEGIN
-        SET input_salary = input_salary + (input_salary * 0.10);
-    END $$
-    DELIMITER ;
+📌 Use case: Pass a salary value and increase it by 10% inside the procedure.
 
-▶️ Call it:
+DELIMITER $$
+
+CREATE PROCEDURE increase_salary_by_10 (
+    INOUT input_salary INT
+)
+BEGIN
+    SET input_salary = input_salary + (input_salary * 0.10);
+END $$
+
+DELIMITER ;
+
+
+▶️ Call the procedure:
+
 SET @mysalary = 8000;
 CALL increase_salary_by_10(@mysalary);
 SELECT @mysalary AS New_Salary;
+
+
 🔹 Result: New_Salary = 8800
 
-3️⃣ Procedure with Multiple IN Parameters
-📌 Use case: Pass department and minimum salary to filter records.
-    DELIMITER $$
+3️⃣ Stored Procedure with Multiple IN Parameters
 
-    CREATE PROCEDURE get_emps_by_dept_salary (
-        IN dept_name VARCHAR(50),
-        IN min_sal INT
-    )
-    BEGIN
-        SELECT * FROM EMP_INFO
-        WHERE ADDRESS = dept_name AND SALARY >= min_sal;
-    END $$
+📌 Use case: Pass location (department/address) and minimum salary to filter employee records.
 
-    DELIMITER ;
+DELIMITER $$
 
-▶️ Call it:
+CREATE PROCEDURE get_emps_by_dept_salary (
+    IN dept_name VARCHAR(50),
+    IN min_sal INT
+)
+BEGIN
+    SELECT * 
+    FROM EMP_INFO
+    WHERE ADDRESS = dept_name 
+      AND SALARY >= min_sal;
+END $$
+
+DELIMITER ;
+
+
+▶️ Call the procedure:
+
 CALL get_emps_by_dept_salary('Delhi', 8000);
