@@ -1,20 +1,82 @@
 Arithmetic operators (+,-,*,/):
-Write a SQL query to display
-Q. Employee name, salary and annual salary of all employees.
-SELECT NAME,SAL,SAL*12 FROM Employee.
+1. Create Database
+CREATE DATABASE CompanyDB;
 
-Q. Employee name, salary and each day salary of all employees.
-SELECT NAME,SAL,SAL/30 FROM Employee.
+2. Use the Database
+USE CompanyDB;
 
-Q. Employee name, salary and 10% of the salary as bonus.
-SELECT NAME,SAL,0.10*SAL FROM Employee.
+3. Create Employee Table
+CREATE TABLE Employee (
+    EmpID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Sal DECIMAL(10,2)
+);
 
-Q. Employee name, salary and 10% of the salary as bonus (use bonus as title).
-SELECT NAME,SAL,0.10*SAL as "10% Bonus" FROM Employee.
+4. Insert Sample Data
+INSERT INTO Employee (EmpID, Name, Sal) VALUES
+(101, 'Ravi', 30000),
+(102, 'Sita', 45000),
+(103, 'Amit', 25000),
+(104, 'Priya', 52000),
+(105, 'Rahul', 40000);
 
-Q. Employee name, salary and 5% of salary as TA.
-SELECT NAME,SAL,0.05 as "TA" from Employee.
+5. View Table Data (Optional)
+SELECT * FROM Employee;
 
-Q. Employee salary as basic salary then display 3% as TA, 6% as DA, 12% HRA, 8% as COMM, and final salary.
-SELECT NAME,SAL As "BASIC SALARY", 0.03*SAL AS "TA", 0.06*SAL As "DA", 0.12*SAL AS "HRA", 0.08*SAL as "COMM" from Employee.
+Output example:
+EmpID	Name	Sal
+101	Ravi	30000
+102	Sita	45000
+103	Amit	25000
+104	Priya	52000
+105	Rahul	40000
 
+Arithmetic Operator Queries
+Q1. Employee name, salary and annual salary
+SELECT Name, Sal, Sal*12 AS Annual_Salary
+FROM Employee;
+
+Explanation
+Annual Salary = Monthly Salary × 12
+
+Q2. Employee name, salary and each day salary
+SELECT Name, Sal, Sal/30 AS Daily_Salary
+FROM Employee;
+
+Explanation
+Daily Salary = Monthly Salary ÷ 30
+
+Q3. Employee name, salary and 10% of salary as bonus
+SELECT Name, Sal, 0.10*Sal AS Bonus
+FROM Employee;
+
+Explanation
+Bonus = 10% of Salary
+
+Q4. Employee name, salary and 10% bonus (with title)
+SELECT Name, Sal, 0.10*Sal AS "10% Bonus"
+FROM Employee;
+
+Q5. Employee name, salary and 5% salary as TA
+Correct version should be:
+SELECT Name, Sal, 0.05*Sal AS "TA"
+FROM Employee;
+
+Explanation
+TA = 5% of Salary
+
+Q6. Employee salary as basic salary and calculate allowances
+SELECT 
+Name,
+Sal AS "BASIC SALARY",
+0.03*Sal AS "TA",
+0.06*Sal AS "DA",
+0.12*Sal AS "HRA",
+0.08*Sal AS "COMM"
+FROM Employee;
+
+Explanation:
+TA = 3% of salary
+DA = 6% of salary
+HRA = 12% of salary
+COMM = 8% of salary
