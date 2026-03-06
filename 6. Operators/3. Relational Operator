@@ -2,20 +2,60 @@ Relational Operators are used to compare values.
 < > = <= >=  are used in relational operators.
 Here we will use a relational operator along with the WHERE clause.
 
-Q. Employee details having salaries less than 25,000.
-SELECT* from EMP_INFO where SAL<25000;
+1. Create Database
+CREATE DATABASE CompanyDB;
 
-Q. Employee details having salaries less than or equal to 25,000.
-SELECT* from EMP_INFO where SAL<=25000;
+2. Use Database
+USE CompanyDB;
 
-Q. Employee details having salaries equal to 75,000
-SELECT * from EMP_INFO where SAL=75000;
+3. Create Employee Table (EMP_INFO)
+CREATE TABLE EMP_INFO (
+    EMP_ID INT PRIMARY KEY,
+    NAME VARCHAR(50),
+    SAL INT,
+    JDATE DATE
+);
 
-Q. Employee details those are not getting 40,000.
-SELECT * from EMP_INFO where NOT SAL=40000;
+4. Insert Sample Data
+INSERT INTO EMP_INFO (EMP_ID, NAME, SAL, JDATE) VALUES
+(101,'RAM',20000,'2022-10-22'),
+(102,'SITA',30000,'2021-05-10'),
+(103,'RAHUL',40000,'2020-07-15'),
+(104,'AMIT',75000,'2019-03-20'),
+(105,'PRIYA',25000,'2022-10-22'),
+(106,'KIRAN',18000,'2023-01-11');
 
-Q. Employee details whose name is RAM.
-SELECT * from EMP_INFO where NAME="RAM";
+5. Display Table Data (Optional)
+SELECT * FROM EMP_INFO;
 
-Q. Employee details who joined on 22nd oct 2022.
-SELECT * from EMP_INFO where JDATE='2022-10-22';
+Example Output
+EMP_ID	NAME	SAL	JDATE
+101	RAM	20000	2022-10-22
+102	SITA	30000	2021-05-10
+103	RAHUL	40000	2020-07-15
+104	AMIT	75000	2019-03-20
+105	PRIYA	25000	2022-10-22
+106	KIRAN	18000	2023-01-11
+
+These are mostly used with the WHERE clause to filter records.
+
+Q1. Employee details having salaries less than 25,000
+SELECT * FROM EMP_INFO WHERE SAL < 25000;
+
+Q2. Employee details having salaries less than or equal to 25,000
+SELECT * FROM EMP_INFO WHERE SAL <= 25000;
+
+Q3. Employee  details having salaries equal to 75,000
+SELECT * FROM EMP_INFO WHERE SAL = 75000;
+
+Q4. Employee details those are not getting 40,000
+SELECT * FROM EMP_INFO WHERE NOT SAL = 40000;
+
+Alternative (more commonly used):
+SELECT * FROM EMP_INFO WHERE SAL <> 40000;
+
+Q5. Employee details whose name is RAM
+SELECT * FROM EMP_INFO WHERE NAME = 'RAM';
+
+Q6. Employee details who joined on 22nd Oct 2022
+SELECT * FROM EMP_INFO WHERE JDATE = '2022-10-22';

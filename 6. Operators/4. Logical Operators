@@ -5,21 +5,53 @@ AND: If both conditions are true, then the result will be True.
 OR: If any one condition is true, then the result will be True.
 NOT: True means false, and False means true.
 
-Q. Employee details those who are getting a salary greater than 25,000 and gender is female.
-SELECT * from EMP_INFO where (SAL>25000 AND GENDER="Female");
+1. Create Database
+CREATE DATABASE CompanyDB;
 
-Q. Employee details those who are getting a salary of between 30000 and 40000.
-SELECT * from EMP_INFO (SAL>30000 AND SAL<40000);
+2. Use Database
+USE CompanyDB;
 
-Q. Employee details those who have joined after December 12th, 2019 or getting a salary greter than 25000.
-SELECT * from EMP_INFO where (JDATE>'2019-12-12' OR SAL>25000);
+3. Create Table (EMP_INFO)
+CREATE TABLE EMP_INFO (
+    EMP_ID INT PRIMARY KEY,
+    NAME VARCHAR(50),
+    GENDER VARCHAR(10),
+    SAL INT,
+    JDATE DATE
+);
 
-Q. Employee details those who are getting a salary greater than 25,000 and gender male, or those who are getting a salary greater than 30,000.
-SELECT * from EMP_INFO where (SAL>25000 AND Gender="Male") or (SAL>30000);
+4. Insert Sample Data
+INSERT INTO EMP_INFO (EMP_ID, NAME, GENDER, SAL, JDATE) VALUES
+(101,'RAM','Male',20000,'2022-10-22'),
+(102,'SITA','Female',35000,'2021-05-10'),
+(103,'RAHUL','Male',40000,'2020-07-15'),
+(104,'PRIYA','Female',30000,'2019-03-20'),
+(105,'ANITA','Female',28000,'2022-10-22'),
+(106,'KIRAN','Male',45000,'2018-11-11');
 
-Q. Employee details for those who have not joined on oct 22nd 2022.
-SELECT * FROM EMP_INFO WHERE NOT JDATE='2022-10-22';
+5. View Table Data
+SELECT * FROM EMP_INFO;
 
+Q1. Employee details with salary > 25000 and gender Female
+SELECT * FROM EMP_INFO WHERE SAL > 25000 AND GENDER = 'Female';
+
+Q2. Employee details with salary between 30000 and 40000
+Correct query:
+SELECT * FROM EMP_INFO WHERE SAL > 30000 AND SAL < 40000;
+
+Alternative (better method):
+SELECT * FROM EMP_INFO WHERE SAL BETWEEN 30000 AND 40000;
+
+Q3. Employees who joined after Dec 12, 2019 OR salary greater than 25000 SELECT * FROM EMP_INFO WHERE JDATE > '2019-12-12' OR SAL > 25000;
+
+Q4. Employees with salary >25000 and gender Male OR salary >30000
+SELECT * FROM EMP_INFO WHERE (SAL > 25000 AND GENDER = 'Male') OR SAL > 30000;
+
+Q5. Employees who have NOT joined on Oct 22, 2022
+SELECT * FROM EMP_INFO WHERE NOT JDATE = '2022-10-22';
+
+Alternative:
+SELECT * FROM EMP_INFO WHERE JDATE <> '2022-10-22';
 
 
 

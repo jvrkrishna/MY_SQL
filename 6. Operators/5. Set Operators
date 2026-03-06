@@ -12,107 +12,96 @@ Set Operators:
     INTERSECT
     MINUS or EXCEPT
 
-UNION:
-    The union operator combines the result sets of two or more SELECT statements into a single result set.
-    It removes duplicate rows from the result set.
+1. Create Database
+CREATE DATABASE CompanyDB;
 
-    SYNTAX:
-        SELECT column_name(s) from table1
-        UNION
-        SELECT column_name(s) from table2;
+2. Use Database
+USE CompanyDB;
 
-    PRACTICAL
-    CREATE TABLE employee (
+3. Create Employee Table
+CREATE TABLE employee (
     id INT PRIMARY KEY,
     name VARCHAR(50),
     salary INT,
     department VARCHAR(50),
     dob DATE
-    );
+);
 
-    CREATE TABLE manager (
+4. Create Manager Table
+CREATE TABLE manager (
     id INT PRIMARY KEY,
     manager_name VARCHAR(50),
     salary INT,
     department VARCHAR(50),
     dob DATE
-    );
+);
 
-    INSERT INTO employee (id, name, salary, department, dob) VALUES
-    (101, 'Jack', 2000, 'HR', '1997-05-19'),
-    (102, 'Jack', NULL, 'HR', NULL),
-    (103, 'Mack', 6000, 'Developer', '1997-03-10'),
-    (104, 'Peter', 4000, 'Tester', '1998-07-16'),
-    (105, 'Tom', 3000, 'HR', '1998-11-03'),
-    (106, 'Leo', 2500, 'Developer', '1997-10-10'),
-    (107, 'Roger', 5300, 'Accounts', '1997-06-17'),
-    (108, 'Mike', 2000, NULL, '1998-03-09'),
-    (109, 'Paul', 4800, 'Developer', '1998-12-28'),
-    (110, 'Hannah', 2000, 'Accounts', '1999-09-26');
+5. Insert Data into Employee Table
+INSERT INTO employee (id, name, salary, department, dob) VALUES
+(101, 'Jack', 2000, 'HR', '1997-05-19'),
+(102, 'Jack', NULL, 'HR', NULL),
+(103, 'Mack', 6000, 'Developer', '1997-03-10'),
+(104, 'Peter', 4000, 'Tester', '1998-07-16'),
+(105, 'Tom', 3000, 'HR', '1998-11-03'),
+(106, 'Leo', 2500, 'Developer', '1997-10-10'),
+(107, 'Roger', 5300, 'Accounts', '1997-06-17'),
+(108, 'Mike', 2000, NULL, '1998-03-09'),
+(109, 'Paul', 4800, 'Developer', '1998-12-28'),
+(110, 'Hannah', 2000, 'Accounts', '1999-09-26');
 
-    INSERT INTO manager (id, manager_name, salary, department, dob) VALUES
-    (101, 'Nancy', 4000, 'HR', '1995-09-09'),
-    (102, 'Lucy', 6500, 'HR', '1997-03-10'),
-    (103, 'Mack', 6000, 'Developer', '1997-03-10'),
-    (104, 'Charlie', 9500, 'Tester', '1998-06-24'),
-    (105, 'Tom', 3000, 'HR', '1998-11-03'),
-    (106, 'Exec', NULL, NULL, '1999-12-30');
+6. Insert Data into Manager Table
+INSERT INTO manager (id, manager_name, salary, department, dob) VALUES
+(101, 'Nancy', 4000, 'HR', '1995-09-09'),
+(102, 'Lucy', 6500, 'HR', '1997-03-10'),
+(103, 'Mack', 6000, 'Developer', '1997-03-10'),
+(104, 'Charlie', 9500, 'Tester', '1998-06-24'),
+(105, 'Tom', 3000, 'HR', '1998-11-03'),
+(106, 'Exec', NULL, NULL, '1999-12-30');
 
-    Q. Write a SQL query to return all the details of the employees from the employee and manager table. Also remove duplicate records.
-    SELECT * from Employee
-    UNION
-    SELECT * from Manager;
+Rules for Set Operators
+Each SELECT statement must have the same number of columns.
+Columns must have similar data types.
+Columns must appear in the same order.
 
-UNION ALL:
-    UNION ALL operator is used to combine the results sets of two or more SELECT statements into a single result set.
-    It retain all rows from all SELECT statements, including any duplicates.
+1️⃣ UNION Operator
+Combines results from multiple SELECT queries and removes duplicate rows.
 
-    SYNTAX:
-        SELECT column_name(s) from table1
-        UNION ALL
-        SELECT column_name(s) from table2;
+Query: Display all employee and manager records without duplicates
+SELECT id, name, salary, department, dob FROM employee
+UNION
+SELECT id, manager_name, salary, department, dob FROM manager;
 
-EXCEPT or MINUS:
-    The Except operator returns rows from the result set of the first SELECT statement that are not present in the result set of the second SELECT statement.
-    Ex: Query1-Query2
-    It also eliminates duplicate rows.
+2️⃣ UNION ALL Operator
+Combines results but keeps duplicate rows.
+SELECT id, name, salary, department, dob FROM employee
+UNION ALL
+SELECT id, manager_name, salary, department, dob FROM manager;
 
-    SYNTAX:
-        SELECT column_name(s) from table1
-        EXCEPT or MINUS
-        SELECT column_name(s) from table2;
+3️⃣ EXCEPT (or MINUS) Operator
+Returns rows in the first table but not in the second table.
+Query: Employees who are NOT managers
+SELECT id, name, salary, department, dob FROM employee
+EXCEPT
+SELECT id, manager_name, salary, department, dob FROM manager;
 
-    Q. Write a SQL query to fetch all the details of the employees who are not manager from the employee table.
-    SELECT * from Employee
-    EXCEPT
-    SELECT * from Manager;
+(In Oracle use MINUS instead of EXCEPT)
 
-INTERSECT:
-    The INTERSECT operator returns the common rows between the result sets of two or more SELECT statements.
-    It only includes rows that appear in all the result sets.
+4️⃣ INTERSECT Operator
+Returns common rows present in both tables.
+Query: Employees who are also managers
+SELECT id, name, salary, department, dob FROM employee
+INTERSECT
+SELECT id, manager_name, salary, department, dob FROM manager;
 
-    SYNTAX:
-        SELECT column_name(s) from table1
-        EXCEPT or MINUS
-        SELECT column_name(s) from table2;
+5️⃣ INTERSECT with Condition
+Query: Employees who are managers where ID > 104
+SELECT id, name, salary, department, dob FROM employee WHERE id > 104
+INTERSECT
+SELECT id, manager_name, salary, department, dob FROM manager;
 
-    Q. Write a SQL query to return all the details of the employees from the employee table who are manager.
-    SELECT * from employee
-    INTERSECT
-    SELECT * from manager;
-
-    Q. Write a SQL query to return all the details of the employees from the employee table who are manager where id>104.
-    SELECT * from employee WHERE id>104
-    INTERSECT
-    SELECT * from manager;
-
-
-    
-
-
-
-
-
-
-
-
+✅ Summary of Set Operators
+Operator	   Purpose
+UNION	       Combines results and removes duplicates
+UNION ALL	   Combines results and keeps duplicates
+EXCEPT/MINUS   Returns rows in first query not in second
+INTERSECT	   Returns common rows from both queries
