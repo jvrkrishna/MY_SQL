@@ -1,4 +1,6 @@
-# Download and Install MySQL
+# MySQL – Installation and Setup
+
+## Download and Install MySQL
 
 To work with MySQL on a Windows computer, we need to download and install MySQL.
 
@@ -10,7 +12,7 @@ Search on Google for:
 
 Or visit the official MySQL Downloads page:
 
-[MySQL Downloads](https://www.mysql.com/downloads/?utm_source=chatgpt.com)
+https://www.mysql.com/downloads/
 
 Then follow these steps:
 
@@ -20,11 +22,11 @@ Then follow these steps:
 
 ## Step 2: Install MySQL
 
-During installation, install the required MySQL components, such as:
+During installation, install the required MySQL components:
 
-* **MySQL Server** – Stores and manages the databases.
-* **MySQL Workbench** – Provides a graphical interface for working with MySQL.
-* **MySQL Shell** – Provides a command-line interface for working with MySQL.
+- **MySQL Server** – Stores and manages databases.
+- **MySQL Workbench** – Provides a graphical interface for working with MySQL.
+- **MySQL Shell** – Provides a command-line interface for working with MySQL.
 
 Follow the installation instructions displayed on the screen.
 
@@ -49,40 +51,3 @@ After logging in, type the following command:
 
 ```sql
 SHOW DATABASES;
-```
-
-Press **Enter**.
-
-### Important:
-
-SQL statements are generally terminated with a **semicolon (`;`)**.
-
-```sql
-SHOW DATABASES;
-```
-
-This command displays the databases available in the MySQL server.
-
-### Example Output
-
-```text
-+--------------------+
-| Database           |
-+--------------------+
-| information_schema |
-| mysql              |
-| performance_schema |
-| sys                |
-+--------------------+
-```
-
-The databases displayed may be different depending on your MySQL installation.
-
-### Important MySQL Components
-
-| Component                     | Purpose                                                    |
-| ----------------------------- | ---------------------------------------------------------- |
-| **MySQL Server**              | Stores and manages databases                               |
-| **MySQL Workbench**           | Graphical tool for working with MySQL                      |
-| **MySQL Shell**               | Command-line interface for MySQL                           |
-| **MySQL Command Line Client** | Allows users to execute SQL commands from the command line |
