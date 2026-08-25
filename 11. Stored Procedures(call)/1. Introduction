@@ -1,55 +1,220 @@
-In MySQL, the CALL command is used to invoke a stored procedure. A stored procedure is a group of SQL statements. If you have a situation, where you write the same query again and again, you can save that specific query as a stored procedure and call by its name.
-You must use DELIMITER to define procedures if they contain semicolons inside.
+# MySQL Stored Procedures
 
-#HOW TO CREATE STORE PROCEDURE:
-    DELIMITER $$
-        CREATE PROCEDURE `get_Stu_info` ()
-        BEGIN
-        SELECT * FROM EMP_INFO;
-        END $$
-    DELIMITER ;
+## What is a Stored Procedure?
 
-Another Example:
-    DELIMITER $$
-        CREATE PROCEDURE `get_Stu_address` ()
-        BEGIN
-        SELECT Address FROM EMP_INFO;
-        END $$
-    DELIMITER ;
+A **stored procedure** is a group of SQL statements stored in the database with a specific name.
 
-#HOW TO EXECUTE STORE PROCEDURE:
-    call get_Stu_info;
+If you need to execute the same SQL query or group of queries again and again, you can save them as a **stored procedure** and execute them by calling the procedure name.
 
-#HOW TO DROP THE PROCEDURE:
-    DROP procedure if exists get_Stu_info;
+In MySQL, the `CALL` command is used to execute a stored procedure.
 
-Notes:
-You can pass IN, OUT, and INOUT parameters
+> **Note:** `DELIMITER` is used when creating procedures that contain semicolons (`;`) inside their body. It temporarily changes the statement delimiter so MySQL can read the complete procedure definition.
 
-************************************************************************************
-🔹 Step 1: Create the Table and Insert Data
-    CREATE TABLE EMP_INFO (
-        ID INT PRIMARY KEY,
-        NAME VARCHAR(50),
-        SALARY INT,
-        ADDRESS VARCHAR(100)
-    );
+---
 
-    INSERT INTO EMP_INFO VALUES
-    (1, 'Ravi', 8000, 'Hyderabad'),
-    (2, 'Anita', 9000, 'Delhi'),
-    (3, 'Suman', 8500, 'Mumbai');
+# 1. How to Create a Stored Procedure
 
-🔹 Step 2: Create a Basic Stored Procedure
-    DELIMITER $$
+### Syntax
 
-    CREATE PROCEDURE get_Stu_info()
-    BEGIN
-        SELECT * FROM EMP_INFO;
-    END $$
+```sql
+DELIMITER $$
 
-    DELIMITER ;
+CREATE PROCEDURE procedure_name()
+BEGIN
+    SQL statements;
+END $$
 
-🔹 Step 3: Call the Procedure
-    CALL get_Stu_info();
-🟢 This will return all rows from the EMP_INFO table.
+DELIMITER ;
+```
+
+### Example 1: Get All Student/Employee Information
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE get_Stu_info()
+BEGIN
+    SELECT * FROM EMP_INFO;
+END $$
+
+DELIMITER ;
+```
+
+This procedure returns all records from the `EMP_INFO` table.
+
+---
+
+### Example 2: Get Only Addresses
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE get_Stu_address()
+BEGIN
+    SELECT ADDRESS FROM EMP_INFO;
+END $$
+
+DELIMITER ;
+```
+
+This procedure returns only the `ADDRESS` column.
+
+---
+
+# 2. How to Execute a Stored Procedure
+
+Use the `CALL` command:
+
+```sql
+CALL get_Stu_info();
+```
+
+Another example:
+
+```sql
+CALL get_Stu_address();
+```
+
+---
+
+# 3. How to Drop a Stored Procedure
+
+To delete a stored procedure:
+
+```sql
+DROP PROCEDURE IF EXISTS get_Stu_info;
+```
+
+Another example:
+
+```sql
+DROP PROCEDURE IF EXISTS get_Stu_address;
+```
+
+Using `IF EXISTS` prevents an error if the procedure does not exist.
+
+---
+
+# 4. Stored Procedure Parameters
+
+Stored procedures can accept parameters.
+
+MySQL supports three types of parameters:
+
+* `IN` — Used to pass a value **into** the procedure.
+* `OUT` — Used to return a value **from** the procedure.
+* `INOUT` — Used to pass a value into the procedure and return a modified value.
+
+---
+
+# 5. Complete Example
+
+## Step 1: Create the Table
+
+```sql
+CREATE TABLE EMP_INFO (
+    ID INT PRIMARY KEY,
+    NAME VARCHAR(50),
+    SALARY INT,
+    ADDRESS VARCHAR(100)
+);
+```
+
+---
+
+## Step 2: Insert Data
+
+```sql
+INSERT INTO EMP_INFO VALUES
+(1, 'Ravi', 8000, 'Hyderabad'),
+(2, 'Anita', 9000, 'Delhi'),
+(3, 'Suman', 8500, 'Mumbai');
+```
+
+The table now contains:
+
+| ID | NAME  | SALARY | ADDRESS   |
+| -- | ----- | ------ | --------- |
+| 1  | Ravi  | 8000   | Hyderabad |
+| 2  | Anita | 9000   | Delhi     |
+| 3  | Suman | 8500   | Mumbai    |
+
+---
+
+## Step 3: Create the Stored Procedure
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE get_Stu_info()
+BEGIN
+    SELECT * FROM EMP_INFO;
+END $$
+
+DELIMITER ;
+```
+
+---
+
+## Step 4: Call the Procedure
+
+```sql
+CALL get_Stu_info();
+```
+
+### Output
+
+The procedure returns all rows from the `EMP_INFO` table:
+
+```text
+1   Ravi    8000   Hyderabad
+2   Anita   9000   Delhi
+3   Suman   8500   Mumbai
+```
+
+---
+
+# 6. Important Syntax to Remember
+
+### Create Procedure
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE procedure_name()
+BEGIN
+    SQL statement;
+END $$
+
+DELIMITER ;
+```
+
+### Execute Procedure
+
+```sql
+CALL procedure_name();
+```
+
+### Drop Procedure
+
+```sql
+DROP PROCEDURE IF EXISTS procedure_name;
+```
+
+---
+
+# 7. Quick Revision
+
+| Command            | Purpose                                     |
+| ------------------ | ------------------------------------------- |
+| `CREATE PROCEDURE` | Creates a stored procedure                  |
+| `CALL`             | Executes a stored procedure                 |
+| `DROP PROCEDURE`   | Deletes a stored procedure                  |
+| `DELIMITER`        | Changes the statement delimiter temporarily |
+| `IN`               | Passes a value into a procedure             |
+| `OUT`              | Returns a value from a procedure            |
+| `INOUT`            | Passes and returns a value                  |
+
+## Key Point
+
+**Stored Procedure = SQL statements saved with a name, which can be executed whenever needed using `CALL`.**
